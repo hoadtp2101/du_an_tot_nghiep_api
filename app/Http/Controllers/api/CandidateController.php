@@ -31,7 +31,10 @@ class CandidateController extends Controller
 
     public function edit(Request $request, $id)
     {
-        
+        $candidate = Candidate::find($id);
+        $candidate->fill($request->all());
+        $candidate->save();
+        return response()->json($candidate);
     }
 
     public function remove($id)

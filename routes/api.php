@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/candidate', [CandidateController::class, 'list'])->name('candidate');
 Route::post('/candidate/create', [CandidateController::class, 'create'])->name('candidate.create');
-Route::put('/candidate/edit/{id}', [CandidateController::class, 'edit'])->name('candidate.edit');
+Route::post('/candidate/edit/{id}', [CandidateController::class, 'edit'])->name('candidate.edit');
 Route::delete('/candidate/delete/{id}', [CandidateController::class, 'remove'])->name('candidate.delete');

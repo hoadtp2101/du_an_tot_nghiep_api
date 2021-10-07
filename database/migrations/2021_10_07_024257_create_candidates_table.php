@@ -18,14 +18,14 @@ class CreateCandidatesTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->string('phone');
-            $table->string('position');
             $table->string('source');
             $table->integer('experience');
             $table->string('school')->nullable();
             $table->string('cv');
-            $table->string('plan_id');
+            $table->unsignedBigInteger('job_id');
             $table->string('status');
             $table->timestamps();
+            $table->foreign('job_id')->references('id')->on('job_requests');
         });
     }
 

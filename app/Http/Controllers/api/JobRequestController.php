@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use App\Models\JobRequest;
+use Illuminate\Http\Request;
+
+class JobRequestController extends Controller
+{
+    public function list()
+    {
+        $job = JobRequest::all();
+        return response()->json($job);
+    }
+
+    public function create(Request $request)
+    {
+        $job = JobRequest::create($request->all());
+        return response()->json($job);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        JobRequest::find($id)->update($request->all());
+        return redirect(route('jobrequest'));
+    }
+    
+    public function remove($id)
+    {
+        JobRequest::destroy($id);
+        return redirect(route('jobrequest'));
+    }
+}

@@ -18,7 +18,7 @@ class Candidate extends Model
         'experience',    
         'school',    
         'cv',    
-        'plan_id',    
-        'status',
+        'plan_id',
+        'status'
     ];
 }

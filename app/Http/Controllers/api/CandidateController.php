@@ -15,26 +15,16 @@ class CandidateController extends Controller
         return response()->json($candidate);
     }
 
-    public function listid($id)
-    {
-        $candidate = Candidate::find($id);
-        return response()->json($candidate);
-    }
-
     public function create(Request $request)
     {
-        $candidate = new Candidate();
-        $candidate->fill($request->all());
-        $candidate->save();
+        $candidate = Candidate::create($request->all());        
         return response()->json($candidate);
     }
 
     public function edit(Request $request, $id)
     {
-        $candidate = Candidate::find($id);
-        $candidate->fill($request->all());
-        $candidate->save();
-        return response()->json($candidate);
+        Candidate::find($id)->update($request->all());
+        return redirect(route('candidate'));
     }
 
     public function remove($id)

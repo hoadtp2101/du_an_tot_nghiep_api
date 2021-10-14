@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Candidate;
+use App\Models\Interview;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,7 @@ class JobRequestController extends Controller
     public function remove($id)
     {
         Candidate::where('job_id', 'like', $id)->delete();
+        Interview::where('job_id', 'like', $id)->delete();
         JobRequest::destroy($id);
         return redirect(route('jobrequest'));
     }

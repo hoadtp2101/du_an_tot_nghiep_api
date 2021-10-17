@@ -16,15 +16,39 @@ class CandidateController extends Controller
     }
 
     public function create(Request $request)
-    {
-        $candidate = Candidate::create($request->all());        
-        return response()->json($candidate);
+    { 
+        $model = new Candidate();
+        $model->fill($request->all());
+        if ($request->hasFile('image')) {
+            $newFileName = uniqid() . '-' . $request->image->getClientOriginalName();
+            $path = $request->image->storeAs('public/images/candidate', $newFileName);
+            $model->image = $newFileName;
+        }
+        if ($request->hasFile('cv')) {
+            $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
+            $path = $request->cv->storeAs('public/cv', $newFileName);
+            $model->cv = $newFileName;
+        }
+        $model->save();      
+        return response()->json($model);        
     }
 
     public function edit(Request $request, $id)
-    {
-        Candidate::find($id)->update($request->all());
-        return redirect(route('candidate'));
+    {        
+        $model = Candidate::find($id);
+        $model->fill($request->all());
+        if ($request->hasFile('image')) {
+            $newFileName = uniqid() . '-' . $request->image->getClientOriginalName();
+            $path = $request->image->storeAs('public/images/candidate', $newFileName);
+            $model->image = $newFileName;
+        }
+        if ($request->hasFile('cv')) {
+            $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
+            $path = $request->cv->storeAs('public/cv', $newFileName);
+            $model->cv = $newFileName;
+        }
+        $model->save(); 
+        return redirect(route('candidate'));         
     }
 
     public function remove($id)

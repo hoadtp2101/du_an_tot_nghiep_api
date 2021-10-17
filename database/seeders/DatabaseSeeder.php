@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Candidate;
+use App\Models\JobRequest;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,5 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        // JobRequest::factory(15)->create();
+        Candidate::factory(300)->create();
     }
 }

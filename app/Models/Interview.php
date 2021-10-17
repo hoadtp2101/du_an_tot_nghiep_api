@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Interview extends Model
 {
     use HasFactory;
-
-    protected $table = "interviews";
-
+    protected $table = 'interviews';
     protected $fillable = [
         'job_id',
         'round_no',
@@ -18,7 +16,6 @@ class Interview extends Model
         'time',
         'title',
         'receiver',
-        'name_candidate'
+        'name_candidate',
     ];
-    
 }

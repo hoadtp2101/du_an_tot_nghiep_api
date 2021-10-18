@@ -35,3 +35,6 @@ Route::get('/interview', [InterviewController::class, 'list'])->name('interview'
 Route::post('/interview/create', [InterviewController::class, 'create'])->name('interview.create');
 Route::post('/interview/edit/{id}', [InterviewController::class, 'edit'])->name('interview.edit');
 Route::delete('/interview/delete/{id}', [InterviewController::class, 'remove'])->name('interview.delete');
+
+Route::get('/export', [CandidateController::class, 'export']);
+Route::post('/import', [CandidateController::class, 'import']);

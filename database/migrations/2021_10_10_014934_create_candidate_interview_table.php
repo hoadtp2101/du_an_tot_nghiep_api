@@ -28,6 +28,9 @@ class CreateCandidateInterviewTable extends Migration
             $table->string('reviews');
             $table->string('result');
             $table->timestamps();
+            $table->foreign('candidate_id')->references('id')->on('candidates');
+            $table->foreign('interview_id')->references('id')->on('interviews');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -11,8 +11,8 @@ class Candidate extends Model
     protected $table = "candidates";
     protected $fillable = [
         'name',
+        'image',
         'phone',    
-        'position',    
         'source',    
         'experience',    
         'school',    

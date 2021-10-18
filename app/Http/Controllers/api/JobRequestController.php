@@ -19,7 +19,7 @@ class JobRequestController extends Controller
     public function create(Request $request)
     {
         $job = JobRequest::create($request->all());
-        return response()->json($job);
+        return redirect(route('jobrequest'));
     }
 
     public function edit(Request $request, $id)

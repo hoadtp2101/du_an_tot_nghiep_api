@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Interview;
+use App\Models\JobRequest;
 use Illuminate\Http\Request;
 
 class InterviewController extends Controller
@@ -16,12 +17,14 @@ class InterviewController extends Controller
 
     public function create(Request $request)
     {
-        $interview = Interview::create($request->all());
-        return response()->json($interview);
+        $job = JobRequest::all();
+        $interview = Interview::create($request->all());       
+        return redirect(route('interview'));
     }
 
     public function edit(Request $request, $id)
     {
+        $job = JobRequest::all();
         Interview::find($id)->update($request->all());
         return redirect(route('interview'));
     }

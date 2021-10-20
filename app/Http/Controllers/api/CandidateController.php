@@ -10,6 +10,9 @@ use App\Models\Candidate;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use Prophecy\Call\Call;
 
 class CandidateController extends Controller
@@ -72,7 +75,43 @@ class CandidateController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new CandidatesImport, $request->file('import')->store('import'));
+        $spreadsheet = IOFactory::load($request->file('import'));
+        $sheet = $spreadsheet->setActiveSheetIndex(0);
+        $i = 0;
+        foreach ($sheet->getDrawingCollection() as $drawing) {
+            if ($drawing instanceof MemoryDrawing) {
+                ob_start();
+                call_user_func(
+                    $drawing->getRenderingFunction(),
+                    $drawing->getImageResource()
+                );
+                $imageContents = ob_get_contents();
+                ob_end_clean();
+            } else if ($drawing instanceof WorksheetDrawing) {
+                $zipReader = fopen($drawing->getPath(), 'r');
+                $imageContents = '';
+                while (!feof($zipReader)) {
+                    $imageContents .= fread($zipReader, 1024);
+                }
+                fclose($zipReader);
+                $extension = $drawing->getExtension();
+            }
+            $myFileName = time() . $i . '.' . $extension;
+            file_put_contents('storage/images/candidate/' . $myFileName, $imageContents);   
+            $arr[$i] = ([
+                'name'       => $sheet->getCellByColumnAndRow(1, ($i + 2))->getValue(),
+                'image'      => $myFileName,
+                'phone'      => $sheet->getCellByColumnAndRow(3, ($i + 2))->getValue(),
+                'source'     => $sheet->getCellByColumnAndRow(4, ($i + 2))->getValue(),
+                'experience' => $sheet->getCellByColumnAndRow(5, ($i + 2))->getValue(),
+                'school'     => $sheet->getCellByColumnAndRow(6, ($i + 2))->getValue(),
+                'cv'         => $sheet->getCellByColumnAndRow(7, ($i + 2))->getValue(),
+                'job_id'     => $sheet->getCellByColumnAndRow(8, ($i + 2))->getValue(),
+                'status'     => $sheet->getCellByColumnAndRow(9, ($i + 2))->getValue(),
+            ]);
+            $i++;
+        }
+        Candidate::insert($arr);
         return back();
     }
 }

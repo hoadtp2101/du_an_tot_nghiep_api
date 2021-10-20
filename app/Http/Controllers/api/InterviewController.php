@@ -1,37 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Interview;
-use App\Models\JobRequest;
 use Illuminate\Http\Request;
 
 class InterviewController extends Controller
 {
-    public function list()
+    public function index()
     {
-        $interview = Interview::all();
-        return response()->json($interview);
+         $interview = Interview::all();
+         return $interview;
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $job = JobRequest::all();
-        $interview = Interview::create($request->all());       
-        return redirect(route('interview'));
+        $interview = Interview::create($request->all());
+        return $interview;
     }
 
-    public function edit(Request $request, $id)
-    {
-        $job = JobRequest::all();
-        Interview::find($id)->update($request->all());
-        return redirect(route('interview'));
+    public function show(Interview $interview)
+    {   
+        return $interview;
     }
 
-    public function remove($id)
+    public function update(Request $request,Interview $interview)
     {
-        Interview::destroy($id);
-        return redirect(route('interview'));
+        return $interview->update($request->all());
+
+    }
+
+    public function destroy(Interview $interview)
+    {
+        return $interview->delete();
     }
 }

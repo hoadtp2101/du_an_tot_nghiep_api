@@ -46,6 +46,13 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+
+            foreach ($this->getRouteFiles() as $routeFile) {
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->namespace($this->namespace)
+                    ->group($routeFile);
+            }
         });
     }
 
@@ -59,5 +66,11 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+    }
+
+    private function getRouteFiles() {
+        return [
+            base_path('routes/interview.php'),           
+        ];
     }
 }

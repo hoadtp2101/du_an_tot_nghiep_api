@@ -31,8 +31,5 @@ Route::post('/jobrequest/create', [JobRequestController::class, 'create'])->name
 Route::post('/jobrequest/edit/{id}', [JobRequestController::class, 'edit'])->name('jobrequest.edit');
 Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
 
-Route::resource('interviews', InterviewController::class)
-    ->only(['update', 'index', 'store', 'destroy', 'show']);
-
 Route::get('/export', [CandidateController::class, 'export']);
 Route::post('/import', [CandidateController::class, 'import']);

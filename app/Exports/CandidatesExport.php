@@ -48,7 +48,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
                         'size' => '14',
                     ]
                 ]);
-                $event->sheet->getStyle('G2:G' . count($candidate))->ApplyFromArray([
+                $event->sheet->getStyle('G2:G' . (count($candidate)+1))->ApplyFromArray([
                     'font' => [
                         'color' => ['rgb' => '0000FF'],
                         'underline' => 'single'

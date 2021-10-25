@@ -8,12 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Imports\CandidatesImport;
 use App\Models\Candidate;
 use App\Models\JobRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
-use Prophecy\Call\Call;
+use Spipu\Html2Pdf\Html2Pdf as Html2Pdf;
 
 class CandidateController extends Controller
 {
@@ -35,8 +36,8 @@ class CandidateController extends Controller
         }
         if ($request->hasFile('cv')) {
             $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
-            $path = $request->cv->storeAs('public/cv', $newFileName);
-            $model->cv = $newFileName;
+            $path = $request->cv->storeAs('public/cv', $newFileName);           
+            $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
         }
         $model->save();
         return redirect(route('candidate'));
@@ -55,7 +56,7 @@ class CandidateController extends Controller
         if ($request->hasFile('cv')) {
             $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
             $path = $request->cv->storeAs('public/cv', $newFileName);
-            $model->cv = $newFileName;
+            $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
         }
         $model->save();
         return redirect(route('candidate'));

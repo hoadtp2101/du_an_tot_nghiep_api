@@ -85,7 +85,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
 
                     $event->sheet->getCell('G' . $loop)
                         ->getHyperlink()
-                        ->setUrl("http://127.0.0.1:8000/storage/cv/" . $candidate->cv);
+                        ->setUrl($candidate->cv);
                     $loop++;
                 }
             }
@@ -101,7 +101,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
             $candidate->source,
             $candidate->experience,
             $candidate->school,
-            $candidate->cv,
+            'link CV',
             $candidate->job_id,
             $candidate->status,
         ];

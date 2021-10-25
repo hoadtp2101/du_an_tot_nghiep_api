@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\CandidateController;
+use App\Http\Controllers\api\CandidateInterviewController;
 use App\Http\Controllers\api\InterviewController;
 use App\Http\Controllers\api\JobRequestController;
 use Illuminate\Http\Request;
@@ -30,6 +31,11 @@ Route::get('/jobrequest', [JobRequestController::class, 'list'])->name('jobreque
 Route::post('/jobrequest/create', [JobRequestController::class, 'create'])->name('jobrequest.create');
 Route::post('/jobrequest/edit/{id}', [JobRequestController::class, 'edit'])->name('jobrequest.edit');
 Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
+
+Route::get('/judge', [CandidateInterviewController::class, 'list'])->name('judge');
+Route::post('/judge/create', [CandidateInterviewController::class, 'create'])->name('judge.create');
+Route::post('/judge/edit/{id}', [CandidateInterviewController::class, 'edit'])->name('judge.edit');
+Route::delete('/judge/delete/{id}', [CandidateInterviewController::class, 'remove'])->name('judge.delete');
 
 Route::get('/export', [CandidateController::class, 'export']);
 Route::post('/import', [CandidateController::class, 'import']);

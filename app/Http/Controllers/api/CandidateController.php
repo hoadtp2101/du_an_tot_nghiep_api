@@ -109,6 +109,7 @@ class CandidateController extends Controller
                 'cv'         => $sheet->getCellByColumnAndRow(7, ($i + 2))->getValue(),
                 'job_id'     => $sheet->getCellByColumnAndRow(8, ($i + 2))->getValue(),
                 'status'     => $sheet->getCellByColumnAndRow(9, ($i + 2))->getValue(),
+                'created_at'     => date('Y-m-d'),
             ]);
             $i++;
         }

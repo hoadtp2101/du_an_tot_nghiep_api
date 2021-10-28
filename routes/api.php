@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\api\CandidateController;
 use App\Http\Controllers\api\CandidateInterviewController;
-use App\Http\Controllers\api\InterviewController;
 use App\Http\Controllers\api\JobRequestController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +35,19 @@ Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove']
 Route::get('/judge', [CandidateInterviewController::class, 'list'])->name('judge');
 Route::post('/judge/create', [CandidateInterviewController::class, 'create'])->name('judge.create');
 Route::post('/judge/edit/{id}', [CandidateInterviewController::class, 'edit'])->name('judge.edit');
-Route::delete('/judge/delete/{id}', [CandidateInterviewController::class, 'remove'])->name('judge.delete');
+Route::get('/judge/show/{id}', [CandidateInterviewController::class, 'show'])->name('judge.show');
 
 Route::get('/export', [CandidateController::class, 'export']);
 Route::post('/import', [CandidateController::class, 'import']);
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+});

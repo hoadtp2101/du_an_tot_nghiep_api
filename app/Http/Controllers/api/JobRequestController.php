@@ -18,7 +18,7 @@ class JobRequestController extends Controller
 
     public function create(Request $request)
     {
-        $job = JobRequest::create($request->all());
+        JobRequest::create($request->all());
         return redirect(route('jobrequest'));
     }
 
@@ -34,5 +34,10 @@ class JobRequestController extends Controller
         Interview::where('job_id', 'like', $id)->delete();
         JobRequest::destroy($id);
         return redirect(route('jobrequest'));
+    }
+
+    public function approve($id, Request $request)
+    {
+        JobRequest::find($id)->update($request->all());
     }
 }

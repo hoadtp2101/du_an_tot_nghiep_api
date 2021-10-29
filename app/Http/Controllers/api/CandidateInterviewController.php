@@ -11,8 +11,8 @@ class CandidateInterviewController extends Controller
 {
     public function list()
     {
-        $judge = CandidateInterview::all();
-        return response()->json($judge);
+        $reviews = CandidateInterview::all();
+        return response()->json($reviews);
     }
 
     public function create(Request $request)
@@ -21,13 +21,13 @@ class CandidateInterviewController extends Controller
         $model->fill($request->all());
         $model->user_id = Auth::user()->id;
         $model->save();
-        return redirect(route('judge'));
+        return redirect(route('reviews'));
     }
 
     public function show($id)
     {        
-        $judge = CandidateInterview::find($id);
-        return response()->json($judge);
+        $reviews = CandidateInterview::find($id);
+        return response()->json($reviews);
     }
 
     public function edit(Request $request, $id)
@@ -36,6 +36,12 @@ class CandidateInterviewController extends Controller
         $model->fill($request->all());
         $model->user_id = Auth::user()->id;
         $model->save();
-        return redirect(route('judge'));
+        return redirect(route('reviews'));
+    }
+
+    public function remove($id)
+    {
+        CandidateInterview::destroy($id);
+        return redirect(route('reviews'));
     }
 }

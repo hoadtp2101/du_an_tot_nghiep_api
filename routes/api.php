@@ -33,10 +33,11 @@ Route::post('/jobrequest/edit/{id}', [JobRequestController::class, 'edit'])->nam
 Route::post('/jobrequest/approve/{id}', [JobRequestController::class, 'approve'])->name('jobrequest.approve');
 Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
 
-Route::get('/judge', [CandidateInterviewController::class, 'list'])->name('judge');
-Route::post('/judge/create', [CandidateInterviewController::class, 'create'])->name('judge.create');
-Route::post('/judge/edit/{id}', [CandidateInterviewController::class, 'edit'])->name('judge.edit');
-Route::get('/judge/show/{id}', [CandidateInterviewController::class, 'show'])->name('judge.show');
+Route::get('/reviews', [CandidateInterviewController::class, 'list'])->name('reviews');
+Route::post('/reviews/create', [CandidateInterviewController::class, 'create'])->name('reviews.create');
+Route::post('/reviews/edit/{id}', [CandidateInterviewController::class, 'edit'])->name('reviews.edit');
+Route::get('/reviews/show/{id}', [CandidateInterviewController::class, 'show'])->name('reviews.show');
+Route::delete('/reviews/delete/{id}', [CandidateInterviewController::class, 'remove'])->name('reviews.delete');
 
 Route::get('/export', [CandidateController::class, 'export']);
 Route::post('/import', [CandidateController::class, 'import']);

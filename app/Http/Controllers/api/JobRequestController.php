@@ -7,13 +7,21 @@ use App\Models\Candidate;
 use App\Models\Interview;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobRequestController extends Controller
 {
     public function list()
     {
-        $job = JobRequest::all();
-        return response()->json($job);
+        if (Auth::check() && Auth::user()->status != 0) {
+            $job = JobRequest::where('status', 'like', '0')->get();
+            return response()->json($job);
+        } else if (Auth::check() && Auth::user()->status == 0) {
+            $job = JobRequest::all();
+            return response()->json($job);
+        } else {
+            return response()->json(['message' => 'Chua dang nhap']);
+        }
     }
 
     public function create(Request $request)
@@ -27,7 +35,7 @@ class JobRequestController extends Controller
         JobRequest::find($id)->update($request->all());
         return redirect(route('jobrequest'));
     }
-    
+
     public function remove($id)
     {
         Candidate::where('job_id', 'like', $id)->delete();
@@ -36,8 +44,9 @@ class JobRequestController extends Controller
         return redirect(route('jobrequest'));
     }
 
-    public function approve($id, Request $request)
+    public function approve(Request $request, $id)
     {
         JobRequest::find($id)->update($request->all());
+        return redirect(route('jobrequest'));
     }
 }

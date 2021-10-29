@@ -30,6 +30,7 @@ Route::delete('/candidate/delete/{id}', [CandidateController::class, 'remove'])-
 Route::get('/jobrequest', [JobRequestController::class, 'list'])->name('jobrequest');
 Route::post('/jobrequest/create', [JobRequestController::class, 'create'])->name('jobrequest.create');
 Route::post('/jobrequest/edit/{id}', [JobRequestController::class, 'edit'])->name('jobrequest.edit');
+Route::post('/jobrequest/approve/{id}', [JobRequestController::class, 'approve'])->name('jobrequest.approve');
 Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
 
 Route::get('/judge', [CandidateInterviewController::class, 'list'])->name('judge');
@@ -47,7 +48,5 @@ Route::group([
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+    Route::get('/logout', [AuthController::class, 'logout']);    
 });

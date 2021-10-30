@@ -27,6 +27,12 @@ class User extends Authenticatable implements JWTSubject
         'status',
     ];
 
+    protected $attributes = [
+        'name',
+        'email',
+        'position',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *

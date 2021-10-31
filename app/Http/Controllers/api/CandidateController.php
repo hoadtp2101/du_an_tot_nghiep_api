@@ -97,13 +97,14 @@ class CandidateController extends Controller
             $arr[$i] = ([
                 'name'       => $sheet->getCellByColumnAndRow(1, ($i + 2))->getValue(),
                 'image'      => $myFileName,
-                'phone'      => $sheet->getCellByColumnAndRow(3, ($i + 2))->getValue(),
-                'source'     => $sheet->getCellByColumnAndRow(4, ($i + 2))->getValue(),
-                'experience' => $sheet->getCellByColumnAndRow(5, ($i + 2))->getValue(),
-                'school'     => $sheet->getCellByColumnAndRow(6, ($i + 2))->getValue(),
-                'cv'         => $sheet->getCellByColumnAndRow(7, ($i + 2))->getValue(),
-                'job_id'     => $sheet->getCellByColumnAndRow(8, ($i + 2))->getValue(),
-                'status'     => $sheet->getCellByColumnAndRow(9, ($i + 2))->getValue(),
+                'email'      => $sheet->getCellByColumnAndRow(3, ($i + 2))->getValue(),
+                'phone'      => $sheet->getCellByColumnAndRow(4, ($i + 2))->getValue(),
+                'source'     => $sheet->getCellByColumnAndRow(5, ($i + 2))->getValue(),
+                'experience' => $sheet->getCellByColumnAndRow(6, ($i + 2))->getValue(),
+                'school'     => $sheet->getCellByColumnAndRow(7, ($i + 2))->getValue(),
+                'cv'         => $sheet->getCellByColumnAndRow(8, ($i + 2))->getValue(),
+                'job_id'     => $sheet->getCellByColumnAndRow(9, ($i + 2))->getValue(),
+                'status'     => $sheet->getCellByColumnAndRow(10, ($i + 2))->getValue(),
                 'created_at'     => date('Y-m-d'),
             ]);
             $i++;

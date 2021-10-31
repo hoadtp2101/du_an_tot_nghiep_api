@@ -50,6 +50,10 @@ class InterviewController extends Controller
             $senditem = new \stdClass();
             $senditem->receiver = $user;
             $senditem->name = implode(', ', $candidates);
+            $senditem->location = $job->location;
+            $senditem->job = $job->title;
+            $senditem->time_start = $request->time_start;
+            $senditem->time_end = $request->time_end;
             Mail::to($toMail[$key])->send(new sendMail($senditem, $request->title));
         }
         $interview = Interview::create($request->all());

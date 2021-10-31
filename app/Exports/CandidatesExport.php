@@ -24,6 +24,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
         return [
             'Name',
             'Image',
+            'Email',
             'Phone',
             'Source',
             'Experience',
@@ -42,20 +43,20 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
 
                 //Freeze frist row
                 $event->sheet->freezePane('A2', 'A2');
-                $event->sheet->getStyle('A1:I1')->ApplyFromArray([
+                $event->sheet->getStyle('A1:J1')->ApplyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => '14',
                     ]
                 ]);
-                $event->sheet->getStyle('G2:G' . (count($candidate)+1))->ApplyFromArray([
+                $event->sheet->getStyle('H2:H' . (count($candidate)+1))->ApplyFromArray([
                     'font' => [
                         'color' => ['rgb' => '0000FF'],
                         'underline' => 'single'
                     ]
                 ]);
 
-                $columnindex = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I');                
+                $columnindex = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');                
 
                 //Set row height
                 for ($i = 0; $i < count($candidate); $i++) //iterate based on row count
@@ -83,7 +84,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
                     $drawing->setCoordinates('B' . $loop);
                     $drawing->setWorksheet($event->sheet->getDelegate());
 
-                    $event->sheet->getCell('G' . $loop)
+                    $event->sheet->getCell('H' . $loop)
                         ->getHyperlink()
                         ->setUrl($candidate->cv);
                     $loop++;
@@ -97,6 +98,7 @@ class CandidatesExport implements FromCollection, WithHeadings, WithMapping, Wit
         return [
             $candidate->name,
             '',
+            $candidate->email,
             $candidate->phone,
             $candidate->source,
             $candidate->experience,

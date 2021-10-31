@@ -52,7 +52,6 @@ class InterviewController extends Controller
             $senditem->name = implode(', ', $candidates);
             Mail::to($toMail[$key])->send(new sendMail($senditem, $request->title));
         }
-        dd('ok');
         $interview = Interview::create($request->all());
         return $interview;
     }

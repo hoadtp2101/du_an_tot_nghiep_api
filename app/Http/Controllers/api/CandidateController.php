@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Exports\CandidateImageExport;
 use App\Exports\CandidatesExport;
 use App\Http\Controllers\Controller;
-use App\Imports\CandidatesImport;
 use App\Models\Candidate;
 use App\Models\JobRequest;
-use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
-use Spipu\Html2Pdf\Html2Pdf as Html2Pdf;
 
 class CandidateController extends Controller
 {
@@ -25,8 +21,7 @@ class CandidateController extends Controller
     }
 
     public function create(Request $request)
-    {
-        $job = JobRequest::all();
+    {        
         $model = new Candidate();
         $model->fill($request->all());
         if ($request->hasFile('image')) {

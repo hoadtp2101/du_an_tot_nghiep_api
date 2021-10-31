@@ -7,12 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class sendMail extends Mailable
+class sendCandidate extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $item;
     public $title;
+
     /**
      * Create a new message instance.
      *
@@ -32,6 +33,6 @@ class sendMail extends Mailable
     public function build()
     {
         $title = $this->title;
-        return $this->subject($title)->text('mail');
+        return $this->subject($title)->text('mailCandidate');
     }
 }

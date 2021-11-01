@@ -19,6 +19,7 @@ class JobRequest extends Model
         'petitioner',	
         'wage',
         'status',
+        'deadline',
         'reason',
     ];
 }

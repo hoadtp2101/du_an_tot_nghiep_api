@@ -14,16 +14,10 @@ class JobRequestController extends Controller
     public function list()
     {
         if (Auth::check() && Auth::user()->status != 0) {
-            $job = JobRequest::where('status', 'like', '0')->get();
-            foreach ($job as $j) {
-                $j->deadline = date("d-m-Y", strtotime($j->deadline));
-            }
+            $job = JobRequest::where('status', 'like', '0')->get();            
             return response()->json($job);
         } else if (Auth::check() && Auth::user()->status == 0) {
-            $job = JobRequest::all();
-            foreach ($job as $j) {
-                $j->deadline = date("d-m-Y", strtotime($j->deadline));
-            }
+            $job = JobRequest::all();            
             return response()->json($job);
         } else {
             return response()->json(['message' => 'Chua dang nhap']);

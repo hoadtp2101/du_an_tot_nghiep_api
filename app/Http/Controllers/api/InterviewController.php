@@ -21,8 +21,7 @@ class InterviewController extends Controller
     }
 
     public function store(Request $request)
-    {
-        
+    {        
         $toMail = explode(',', $request->receiver);
         $user = [];
         foreach ($toMail as $key => $mail) {
@@ -50,6 +49,7 @@ class InterviewController extends Controller
             $senditem = new \stdClass();
             $senditem->receiver = $user;
             $senditem->name = implode(', ', $candidates);
+            $senditem->position = $job->position;
             $senditem->location = $job->location;
             $senditem->job = $job->title;
             $senditem->time_start = $request->time_start;

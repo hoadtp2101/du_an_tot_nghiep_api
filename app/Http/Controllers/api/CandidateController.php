@@ -35,7 +35,7 @@ class CandidateController extends Controller
             $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
         }
         $model->save();
-        return redirect(route('candidate'));
+        return $model;
     }
 
     public function edit(Request $request, $id)
@@ -54,13 +54,13 @@ class CandidateController extends Controller
             $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
         }
         $model->save();
-        return redirect(route('candidate'));
+        return $model;
     }
 
     public function remove($id)
     {
-        Candidate::destroy($id);
-        return redirect(route('candidate'));
+        $candidate = Candidate::destroy($id);
+        return $candidate;
     }
 
     public function export()

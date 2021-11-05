@@ -26,27 +26,27 @@ class JobRequestController extends Controller
 
     public function create(Request $request)
     {
-        JobRequest::create($request->all());
-        return redirect(route('jobrequest'));
+        $jobrequest = JobRequest::create($request->all());
+        return $jobrequest;
     }
 
     public function edit(Request $request, $id)
     {
-        JobRequest::find($id)->update($request->all());
-        return redirect(route('jobrequest'));
+        $jobrequest = JobRequest::find($id)->update($request->all());
+        return $jobrequest;
     }
 
     public function remove($id)
     {
         Candidate::where('job_id', 'like', $id)->delete();
         Interview::where('job_id', 'like', $id)->delete();
-        JobRequest::destroy($id);
-        return redirect(route('jobrequest'));
+        $jobrequest = JobRequest::destroy($id);
+        return $jobrequest;
     }
 
     public function approve(Request $request, $id)
     {
-        JobRequest::find($id)->update($request->all());
-        return redirect(route('jobrequest'));
+        $jobrequest = JobRequest::find($id)->update($request->all());
+        return $jobrequest;
     }
 }

@@ -21,7 +21,7 @@ class CandidateInterviewController extends Controller
         $model->fill($request->all());
         $model->user_id = Auth::user()->id;
         $model->save();
-        return redirect(route('reviews'));
+        return $model;
     }
 
     public function show($id)
@@ -36,12 +36,12 @@ class CandidateInterviewController extends Controller
         $model->fill($request->all());
         $model->user_id = Auth::user()->id;
         $model->save();
-        return redirect(route('reviews'));
+        return $model;
     }
 
     public function remove($id)
     {
-        CandidateInterview::destroy($id);
-        return redirect(route('reviews'));
+        $reviews = CandidateInterview::destroy($id);
+        return $reviews;
     }
 }

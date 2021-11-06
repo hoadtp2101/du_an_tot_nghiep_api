@@ -19,14 +19,20 @@ class JobRequestController extends Controller
 
     public function create(Request $request)
     {
-        $jobrequest = JobRequest::create($request->all());
-        return $jobrequest;
+        $model = new JobRequest();
+        $model->fill($request->all());
+        $model->petitioner = Auth::user()->id;
+        $model->save();
+        return $model;
     }
 
     public function edit(Request $request, $id)
     {
-        $jobrequest = JobRequest::find($id)->update($request->all());
-        return $jobrequest;
+        $model = JobRequest::find($id);
+        $model->fill($request->all());
+        $model->petitioner = Auth::user()->id;
+        $model->save();
+        return $model;        
     }
 
     public function remove($id)

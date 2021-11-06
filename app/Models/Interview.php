@@ -15,6 +15,7 @@ class Interview extends Model
         'position',
         'time_start',
         'time_end',
+        'location',
         'title',
         'receiver',
         'name_candidate',

@@ -39,10 +39,14 @@ class InterviewController extends Controller
             $senditem = new \stdClass();
             $senditem->name = $u->name;
             $senditem->position = $job->position;
-            $senditem->location = $job->location;
+            $senditem->location = $request->location;
             $senditem->time_start = $request->time_start;
             $senditem->time_end = $request->time_end;
-            Mail::to($u->email)->send(new sendCandidate($senditem, $request->title));        
+            Mail::to($u->email)->send(new sendCandidate($senditem, $request->title));     
+            $model = new Interview();
+            $model->fill($request->all());
+            $model->name_candidate = $value;
+            $model->save();
         }
        
         foreach ($user as $key => $user) {
@@ -50,14 +54,12 @@ class InterviewController extends Controller
             $senditem->receiver = $user;
             $senditem->name = implode(', ', $candidates);
             $senditem->position = $job->position;
-            $senditem->location = $job->location;
+            $senditem->location = $request->location;
             $senditem->job = $job->title;
             $senditem->time_start = $request->time_start;
             $senditem->time_end = $request->time_end;
             Mail::to($toMail[$key])->send(new sendMail($senditem, $request->title));
         }
-        $interview = Interview::create($request->all());
-        return $interview;
     }
 
     public function show(Interview $interview)

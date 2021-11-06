@@ -18,5 +18,8 @@ class JobRequest extends Model
         'working_time',	
         'petitioner',	
         'wage',
+        'status',
+        'deadline',
+        'reason',
     ];
 }

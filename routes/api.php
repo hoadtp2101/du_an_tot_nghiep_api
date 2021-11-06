@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\CandidateController;
-use App\Http\Controllers\api\InterviewController;
+use App\Http\Controllers\api\CandidateInterviewController;
 use App\Http\Controllers\api\JobRequestController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,22 +17,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    // Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
-
-Route::get('/candidate', [CandidateController::class, 'list'])->name('candidate');
-Route::post('/candidate/create', [CandidateController::class, 'create'])->name('candidate.create');
-Route::post('/candidate/edit/{id}', [CandidateController::class, 'edit'])->name('candidate.edit');
-Route::delete('/candidate/delete/{id}', [CandidateController::class, 'remove'])->name('candidate.delete');
-
-Route::get('/jobrequest', [JobRequestController::class, 'list'])->name('jobrequest');
-Route::post('/jobrequest/create', [JobRequestController::class, 'create'])->name('jobrequest.create');
-Route::post('/jobrequest/edit/{id}', [JobRequestController::class, 'edit'])->name('jobrequest.edit');
-Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
-
-Route::get('/interview', [InterviewController::class, 'list'])->name('interview');
-Route::post('/interview/create', [InterviewController::class, 'create'])->name('interview.create');
-Route::post('/interview/edit/{id}', [InterviewController::class, 'edit'])->name('interview.edit');
-Route::delete('/interview/delete/{id}', [InterviewController::class, 'remove'])->name('interview.delete');

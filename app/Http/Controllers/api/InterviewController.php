@@ -21,18 +21,11 @@ class InterviewController extends Controller
     }
 
     public function store(Request $request)
-    {        
-        $toMail = explode(',', $request->receiver);
-        $user = [];
-        foreach ($toMail as $key => $mail) {
-            $u = User::where('email', 'like', $mail)->get();
-            foreach ($u as $value) {
-                $user[$key] = $value->name;
-            }
-        }
+    {                        
         $job = JobRequest::find($request->job_id);
         $candidate_id = explode(',', $request->name_candidate);
         $candidates = [];
+        $interviews = [];
         foreach ($candidate_id as $key => $value) {
             $u = Candidate::find($value);
             $candidates[$key] = $u->name;    
@@ -47,19 +40,23 @@ class InterviewController extends Controller
             $model->fill($request->all());
             $model->name_candidate = $value;
             $model->save();
+            $interviews[$key] = $model;  
         }
        
-        foreach ($user as $key => $user) {
+        $toUser = explode(',', $request->receiver);
+        foreach ($toUser as $key => $value) {
+            $u = User::find($value);
             $senditem = new \stdClass();
-            $senditem->receiver = $user;
+            $senditem->receiver = $u->name;
             $senditem->name = implode(', ', $candidates);
             $senditem->position = $job->position;
             $senditem->location = $request->location;
             $senditem->job = $job->title;
             $senditem->time_start = $request->time_start;
             $senditem->time_end = $request->time_end;
-            Mail::to($toMail[$key])->send(new sendMail($senditem, $request->title));
+            Mail::to($u->email)->send(new sendMail($senditem, $request->title));
         }
+        return $interviews;
     }
 
     public function show(Interview $interview)

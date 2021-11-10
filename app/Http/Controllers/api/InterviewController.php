@@ -56,6 +56,9 @@ class InterviewController extends Controller
             $senditem->time_end = $request->time_end;
             Mail::to($u->email)->send(new sendMail($senditem, $request->title));
         }
+
+        $interview = Interview::create($request->all());
+
         return $interviews;
     }
 
@@ -70,7 +73,7 @@ class InterviewController extends Controller
     }
 
     public function destroy(Interview $interview)
-    {
+    {   
         return $interview->delete();
     }
 }

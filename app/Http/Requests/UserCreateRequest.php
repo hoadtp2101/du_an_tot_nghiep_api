@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserCreateRequest extends FormRequest
 {
@@ -28,8 +31,16 @@ class UserCreateRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'employee_code' => 'required|unique:users',
-            // 'status' => 'required|number',
+            'status' => 'number',
             'roleIds'    => "required|array",
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+    throw new HttpResponseException(response()->json([
+        'status' => false,
+        'message' => [$validator->errors()],
+        'items' => null], 440));
     }
 }

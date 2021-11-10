@@ -35,8 +35,11 @@ class JobRequestController extends Controller
 
     public function update(Request $request, JobRequest $jobRequest)
     {
-        $jobrequest = $jobRequest->update($request->all());
-        return $jobrequest;
+        $model = JobRequest::find($jobRequest->id);
+        $model->fill($request->all());
+        $model->petitioner = Auth::user()->id;
+        $model->save();
+        return $model;     
     }
 
     public function remove($id)

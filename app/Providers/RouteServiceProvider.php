@@ -73,7 +73,8 @@ class RouteServiceProvider extends ServiceProvider
             base_path('routes/interview.php'),
             base_path('routes/candidate.php'),
             base_path('routes/jobrequest.php'),
-            base_path('routes/reviews.php'),           
+            base_path('routes/reviews.php'),
+            base_path('routes/user.php'),
         ];
     }
 }

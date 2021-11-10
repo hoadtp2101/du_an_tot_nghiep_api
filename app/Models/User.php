@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+    const PERMISSION_USER_CREATE = 4;
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -25,12 +26,6 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'position',
         'status',
-    ];
-
-    protected $attributes = [
-        'name',
-        'email',
-        'position',
     ];
 
     /**
@@ -58,5 +53,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims() {
         return [];
-    } 
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
 }

@@ -14,10 +14,10 @@ class JobRequestController extends Controller
     public function list()
     {
         if (Auth::check() && Auth::user()->status != 0) {
-            $job = JobRequest::where('status', 'like', '0')->get();            
+            $job = JobRequest::where('status', 'like', '0')->get();
             return response()->json($job);
         } else if (Auth::check() && Auth::user()->status == 0) {
-            $job = JobRequest::all();            
+            $job = JobRequest::all();
             return response()->json($job);
         } else {
             return response()->json(['message' => 'Chua dang nhap']);
@@ -30,9 +30,9 @@ class JobRequestController extends Controller
         return $jobrequest;
     }
 
-    public function edit(Request $request, $id)
+    public function update(Request $request, JobRequest $jobRequest)
     {
-        $jobrequest = JobRequest::find($id)->update($request->all());
+        $jobrequest = $jobRequest->update($request->all());
         return $jobrequest;
     }
 

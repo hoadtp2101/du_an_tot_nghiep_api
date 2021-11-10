@@ -1,6 +1,6 @@
 Kính gửi: {{$item->receiver}},
 
-Qua vòng lọc hồ sơ, chúng tôi nhận thấy bạn {{$item->name}} tiềm năng với viên vị trí {{$item->position}} thuộc
+Qua vòng lọc hồ sơ, chúng tôi nhận thấy bạn {{$item->name}} tiềm năng với vị trí {{$item->position}} thuộc
 dự án {{$item->job}}. Bộ phận nhân sự gửi tới lời mời Anh/Chị tham gia phỏng vấn để trao đổi, tìm hiểu ứng viên có phù hợp với dự án. Thông tin buổi phỏng vấn cụ thể như sau:
 - Thời gian: từ {{$item->time_start}} - {{$item->time_end}}
 - Địa điểm: {{$item->location}}

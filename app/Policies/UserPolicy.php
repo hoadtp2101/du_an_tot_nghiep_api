@@ -10,7 +10,7 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function hrManager(User $user){
+    public function hrManager(User $user){        
         $roles = $user->roles;
         if( $roles->contains('type', Role::ROLE_HR_MANAGER)){
             return true;

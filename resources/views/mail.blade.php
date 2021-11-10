@@ -5,5 +5,5 @@ dự án {{$item->job}}. Bộ phận nhân sự gửi tới lời mời Anh/Ch�
 - Thời gian: từ {{$item->time_start}} - {{$item->time_end}}
 - Địa điểm: {{$item->location}}
 
-Anh/chị vui lòng phản hổi lại email xác nhận lại lịch phỏng vấn để bộ phận có thể sắp xếp thời gian cho phù hợp.
+Anh/chị vui lòng phản hồi lại email xác nhận lại lịch phỏng vấn để bộ phận có thể sắp xếp thời gian cho phù hợp.
 Trân trọng!

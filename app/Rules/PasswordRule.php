@@ -27,27 +27,26 @@ class PasswordRule implements Rule
     {
         // Banned words
         $words = array('¥', '\\', '&', '<', '>', '"', '\'', ' ');
-        foreach ($words as $word)
-        {
+        foreach ($words as $word) {
             if (stripos($value, $word) !== false) return false;
         }
 
         $count_pass = 0;
 
         if (preg_match('/[a-z]/', $value)) {
-            $count_pass ++;
+            $count_pass++;
         }
 
         if (preg_match('/[A-Z]/', $value)) {
-            $count_pass ++;
+            $count_pass++;
         }
 
         if (preg_match('/[0-9]/', $value)) {
-            $count_pass ++;
+            $count_pass++;
         }
 
         if (preg_match('/[!#$%&()*+,-.:;<=>?@[\]^_`{|}~\/]/', $value)) {
-            $count_pass ++;
+            $count_pass++;
         }
 
         $pw_length = strlen($value);

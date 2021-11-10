@@ -32,7 +32,7 @@ class UserController extends Controller
         return response()->json([
             'status'=> 200,
             'message'=> 'User created successfully',
-            'data'=>$user
+            'data'=> $user
         ]);
     }
 

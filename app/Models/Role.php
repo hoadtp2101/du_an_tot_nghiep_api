@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-
     const ROLE_HR_MANAGER = 'hr_manager';
     const ROLE_OTHER_MANAGER = 'other_manager';
     const ROLE_HR = 'hr';

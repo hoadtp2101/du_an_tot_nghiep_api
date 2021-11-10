@@ -11,5 +11,3 @@ Route::group(['middleware' => 'auth.jwt'], function(){
     Route::get('/reviews/show/{id}', [CandidateInterviewController::class, 'show'])->name('reviews.show');
     Route::delete('/reviews/delete/{id}', [CandidateInterviewController::class, 'remove'])->name('reviews.delete');
 });
-
-

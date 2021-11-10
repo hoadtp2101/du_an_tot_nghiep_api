@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Exports\CandidatesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Candidate;
+use App\Models\CandidateInterview;
+use App\Models\Interview;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -59,7 +61,13 @@ class CandidateController extends Controller
 
     public function remove($id)
     {
-        $candidate = Candidate::destroy($id);
+        $interview = Interview::where('name_candidate', 'like', $id)->get();        
+        foreach($interview as $i){            
+            CandidateInterview::where('interview_id', 'like', $i->id)->delete();
+        }        
+        Interview::where('name_candidate', 'like', $id)->delete();        
+        Candidate::where('job_id', 'like', $id)->delete();
+        $candidate = Candidate::destroy($id);        
         return $candidate;
     }
 

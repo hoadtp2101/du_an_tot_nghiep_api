@@ -11,7 +11,6 @@ class UserPolicy
     use HandlesAuthorization;
 
     public function hrManager(User $user){
-        echo "dsdsd"; die;
         $roles = $user->roles;
         if( $roles->contains('type', Role::ROLE_HR_MANAGER)){
             return true;

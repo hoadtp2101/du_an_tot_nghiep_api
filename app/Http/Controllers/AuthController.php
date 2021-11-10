@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use Tymon\JWTAuth\JWTAuth;
 use Validator;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -21,8 +19,9 @@ class AuthController extends Controller
         $this->middleware('auth.jwt', ['except' => ['login', 'register']]);
     }
 
-    public function login(Request $request){
-    	$validator = Validator::make($request->all(), [
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
@@ -38,25 +37,8 @@ class AuthController extends Controller
         return $this->createNewToken($token);
     }
 
-    // public function register(Request $request){
-    //     $user = $this->user->create([
-    //         'name' => $request->get('name'),
-    //         'employee_code' => $request->get('employee_code'),
-    //         'email' => $request->get('email'),
-    //         'password' => Hash::make($request->get('password')),
-    //         'position' => $request->get('position'),
-    //         'status' => $request->get('status'),
-    //     ]);
-
-    //     return response()->json([
-    //         'status'=> 200,
-    //         'message'=> 'User created successfully',
-    //         'data'=>$user
-    //     ]);
-    // }
-
-    public function logout() {
-
+    public function logout()
+    {
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }

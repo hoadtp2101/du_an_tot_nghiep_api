@@ -3,29 +3,23 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\UserCreateRequest;
+// use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\UserCreateRequest;
-
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-
-
+use App\Models\Role;
+use App\Models\UserRole;
 
 class UserController extends Controller
 {
-    public  function index(){
-        return User::all();
+    public  function index(){          
+        return User::with('roles')->get();
     }
 
-    public function show(User $user){
-        return $user;
+    public function show(User $user){        
+        return User::with('roles')->where('id', $user->id)->first();
     }
 
     public function store(UserCreateRequest $request){    

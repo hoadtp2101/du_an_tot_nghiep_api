@@ -19,12 +19,6 @@ class AuthController extends Controller
         $this->middleware('auth.jwt', ['except' => ['login', 'register']]);
     }
 
-    public function listinterviewer()
-    {
-        $user = User::where('role', 'like', 3)->get();
-        return response()->json($user);
-    }
-
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [

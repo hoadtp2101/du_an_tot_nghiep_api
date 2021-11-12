@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // JobRequest::factory(15)->create();
         Candidate::factory(300)->create();
+        RoleSeeder::class;
     }
 }

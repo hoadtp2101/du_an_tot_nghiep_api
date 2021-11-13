@@ -13,15 +13,8 @@ class JobRequestController extends Controller
 {
     public function list()
     {
-        if (Auth::check() && Auth::user()->status != 0) {
-            $job = JobRequest::where('status', 'like', '0')->get();
-            return response()->json($job);
-        } else if (Auth::check() && Auth::user()->status == 0) {
-            $job = JobRequest::all();
-            return response()->json($job);
-        } else {
-            return response()->json(['message' => 'Chua dang nhap']);
-        }   
+        $job = JobRequest::all();
+        return response()->json($job);
     }
 
     public function create(Request $request)
@@ -39,7 +32,7 @@ class JobRequestController extends Controller
         $model->fill($request->all());
         $model->petitioner = Auth::user()->id;
         $model->save();
-        return $model;     
+        return $model;
     }
 
     public function remove($id)

@@ -10,7 +10,7 @@ class Role extends Model
     use HasFactory;
     
     const ROLE_HR_MANAGER = 'hr_manager';
-    const ROLE_OTHER_MANAGER = 'other_manager';
+    const ROLE_OTHER_MANAGER = 'Manager';
     const ROLE_HR = 'hr';
     const ROLE_INTERVIEWER = 'interviewer';
 

@@ -60,11 +60,12 @@ class JobRequestPolicy
     public function update(User $user, JobRequest $jobRequest)
     {
 
-        $roles = $user->roles;
-        if( $roles->contains('type', Role::ROLE_HR_MANAGER)){
+        $roles = $user->roles()->pluck('type')->toArray();
+        $status = array_uintersect($roles, [Role::ROLE_HR_MANAGER, Role::ROLE_OTHER_MANAGER ], "strcmp");
+        if(!empty($status)){
             return true;
         }
-
+        
         return false;
     }
 

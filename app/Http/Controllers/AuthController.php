@@ -53,11 +53,23 @@ class AuthController extends Controller
     }
 
     protected function createNewToken($token){
+        $user = User::with('roles')->where('id', auth()->user()->id)->first();
+        foreach($user->roles as $role){
+            $user->roles = $role->id;
+        }
+        $u['id'] = $user->id;  
+        $u['name'] = $user->name;  
+        $u['email'] = $user->email;  
+        $u['employee_code'] = $user->employee_code;  
+        $u['password'] = $user->password;  
+        $u['status'] = $user->status;  
+        $u['roles'] = $user->roles;  
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,            
-            'user' => User::with('roles')->where('id', auth()->user()->id)->first(),
+            'user' => $u,
         ]);
     }
 

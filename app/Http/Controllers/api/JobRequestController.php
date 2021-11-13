@@ -13,7 +13,13 @@ class JobRequestController extends Controller
 {
     public function list()
     {
-        $job = JobRequest::all();
+        $job = JobRequest::with('petitioner:id, name')->get();
+        return response()->json($job);
+    }
+
+    public function show($id)
+    {
+        $job = JobRequest::with('petitioner:id, name')->find($id);
         return response()->json($job);
     }
 

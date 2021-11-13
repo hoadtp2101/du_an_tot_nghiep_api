@@ -12,14 +12,18 @@ class JobRequest extends Model
     protected $fillable = [
         'title',
         'description',
-        'position',	
-        'amount',	
-        'location',	
-        'working_time',	
-        'petitioner',	
+        'position',
+        'amount',
+        'location',
+        'working_time',
+        'petitioner',
         'wage',
         'status',
         'deadline',
         'reason',
     ];
+
+    public function petitioner(){
+        return $this->belongsTo(User::class, 'petitioner', 'id');
+    }
 }

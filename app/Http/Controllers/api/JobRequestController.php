@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Candidate;
 use App\Models\Interview;
 use App\Models\JobRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +13,7 @@ class JobRequestController extends Controller
 {
     public function list()
     {
-        $job = JobRequest::all();        
-        foreach($job as $j){
-            $j->petitioner = User::find($j->petitioner)->name;
-        }
+        $job = JobRequest::all();
         return response()->json($job);
     }
 

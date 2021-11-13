@@ -57,8 +57,6 @@ class InterviewController extends Controller
             Mail::to($u->email)->send(new sendMail($senditem, $request->title));
         }
 
-        $interview = Interview::create($request->all());
-
         return $interviews;
     }
 

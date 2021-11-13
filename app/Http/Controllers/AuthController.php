@@ -63,7 +63,7 @@ class AuthController extends Controller
         $u['employee_code'] = $user->employee_code;  
         $u['password'] = $user->password;  
         $u['status'] = $user->status;  
-        $u['roles'] = $user->roles;  
+        $u['role'] = $user->roles;  
 
         return response()->json([
             'access_token' => $token,

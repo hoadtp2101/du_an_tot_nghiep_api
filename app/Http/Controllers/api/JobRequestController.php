@@ -25,33 +25,29 @@ class JobRequestController extends Controller
 
     public function create(Request $request)
     {
-        $model = new JobRequest();
-        $model->fill($request->all());
-        $model->petitioner = Auth::user()->id;
-        $model->save();
-        return $model;
+        $data = array_merge($request->all(), ['status' => '0', 'petitioner' => Auth::id()]);
+        return JobRequest::create($data);
     }
 
     public function update(Request $request, JobRequest $jobRequest)
     {
         $model = JobRequest::find($jobRequest->id);
-        $model->fill($request->all());
-        $model->petitioner = Auth::user()->id;
+        $model->fill($request->except('status'));
         $model->save();
         return $model;
     }
 
-    public function remove($id)
+    public function remove(JobRequest $jobRequest)
     {
-        Candidate::where('job_id', 'like', $id)->delete();
-        Interview::where('job_id', 'like', $id)->delete();
-        $jobrequest = JobRequest::destroy($id);
+        Candidate::where('job_id', $jobRequest->id)->delete();
+        Interview::where('job_id', $jobRequest->id)->delete();
+        $jobrequest = JobRequest::destroy($jobRequest->id);
         return $jobrequest;
     }
 
-    public function approve(Request $request, $id)
+    public function approve(Request $request, JobRequest $jobRequest)
     {
-        $jobrequest = JobRequest::find($id)->update($request->all());
-        return $jobrequest;
+        $jobrequest = $jobRequest->update(['status' => $request->status]);
+        return response()->json('successful_status_change', 200);
     }
 }

@@ -21,28 +21,28 @@ class InterviewController extends Controller
     }
 
     public function store(Request $request)
-    {                        
+    {                        echo "dsdsd";die;
         $job = JobRequest::find($request->job_id);
         $candidate_id = explode(',', $request->name_candidate);
         $candidates = [];
         $interviews = [];
         foreach ($candidate_id as $key => $value) {
             $u = Candidate::find($value);
-            $candidates[$key] = $u->name;    
+            $candidates[$key] = $u->name;
             $senditem = new \stdClass();
             $senditem->name = $u->name;
             $senditem->position = $job->position;
             $senditem->location = $request->location;
             $senditem->time_start = $request->time_start;
             $senditem->time_end = $request->time_end;
-            Mail::to($u->email)->send(new sendCandidate($senditem, $request->title));     
+            Mail::to($u->email)->send(new sendCandidate($senditem, $request->title));
             $model = new Interview();
             $model->fill($request->all());
             $model->name_candidate = $value;
             $model->save();
-            $interviews[$key] = $model;  
+            $interviews[$key] = $model;
         }
-       
+
         $toUser = explode(',', $request->receiver);
         foreach ($toUser as $key => $value) {
             $u = User::find($value);
@@ -71,7 +71,7 @@ class InterviewController extends Controller
     }
 
     public function destroy(Interview $interview)
-    {   
+    {
         return $interview->delete();
     }
 }

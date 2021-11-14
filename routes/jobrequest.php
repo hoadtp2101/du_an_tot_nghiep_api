@@ -8,8 +8,8 @@ Route::group(['middleware' => 'auth.jwt'], function(){
     Route::get('/jobrequest', [JobRequestController::class, 'list'])->name('jobrequest');
     Route::get('/jobrequest/{id}', [JobRequestController::class, 'show'])->name('jobrequest.detail');
     Route::post('/jobrequest/create', [JobRequestController::class, 'create'])->name('jobrequest.create')->middleware('can:create,App\JobRequest');
-    Route::post('/jobrequest/edit/{jobRequest}', [JobRequestController::class, 'update'])->name('jobrequest.update')->middleware('can:update,jobRequest');
-    Route::post('/jobrequest/approve/{id}', [JobRequestController::class, 'approve'])->name('jobrequest.approve');
-    Route::delete('/jobrequest/delete/{id}', [JobRequestController::class, 'remove'])->name('jobrequest.delete');
+    Route::post('/jobrequest/edit/{jobRequest}', [JobRequestController::class, 'update'])->name('jobrequest.update')->middleware('can:manager,jobRequest');
+    Route::post('/jobrequest/approve/{jobRequest}', [JobRequestController::class, 'approve'])->name('jobrequest.approve')->middleware('can:approve,jobRequest');
+    Route::delete('/jobrequest/delete/{jobRequest}', [JobRequestController::class, 'remove'])->name('jobrequest.delete')->middleware('can:manager,jobRequest');
 });
 

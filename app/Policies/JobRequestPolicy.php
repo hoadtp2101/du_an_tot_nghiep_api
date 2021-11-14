@@ -6,40 +6,12 @@ use App\Models\JobRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class JobRequestPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\JobRequest  $jobRequest
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user, JobRequest $jobRequest)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
     public function create(User $user)
     {
         $roles = $user->roles()->pluck('type')->toArray();
@@ -57,37 +29,19 @@ class JobRequestPolicy
      * @param  \App\Models\JobRequest  $jobRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, JobRequest $jobRequest)
+    public function manager(User $user, JobRequest $jobRequest)
     {
-
         $roles = $user->roles()->pluck('type')->toArray();
-        $status = array_uintersect($roles, [Role::ROLE_HR_MANAGER, Role::ROLE_OTHER_MANAGER ], "strcmp");
-        if(!empty($status)){
+        if(in_array(Role::ROLE_HR_MANAGER, $roles)){
             return true;
+        } else if (in_array(Role::ROLE_OTHER_MANAGER, $roles) && Auth::id() == $jobRequest->petitioner){
+            return  true;
+        } else {
+            return false;
         }
-        
-        return false;
+
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\JobRequest  $jobRequest
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, JobRequest $jobRequest)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\JobRequest  $jobRequest
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
     public function restore(User $user, JobRequest $jobRequest)
     {
         //
@@ -100,8 +54,13 @@ class JobRequestPolicy
      * @param  \App\Models\JobRequest  $jobRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, JobRequest $jobRequest)
+    public function approve(User $user, JobRequest $jobRequest)
     {
-        //
+        $roles = $user->roles()->pluck('type')->toArray();
+        if(in_array(Role::ROLE_HR_MANAGER, $roles)) {
+            return true;
+        }
+
+        return false;
     }
 }

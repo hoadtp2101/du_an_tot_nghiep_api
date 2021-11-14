@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Candidate;
+use App\Models\CandidateInterview;
+use App\Models\Interview;
 use App\Models\JobRequest;
 use App\Models\User;
+use App\Policies\CadidatePolicy;
+use App\Policies\CandidateInterviewPolicy;
+use App\Policies\InterviewPolicy;
 use App\Policies\JobRequestPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -18,7 +24,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         User::class => UserPolicy::class,
-        JobRequest::class => JobRequestPolicy::class
+        JobRequest::class => JobRequestPolicy::class,
+        Candidate::class => CadidatePolicy::class,
+        Interview::class => InterviewPolicy::class,
+        CandidateInterview::class => CandidateInterviewPolicy::class
     ];
 
     /**

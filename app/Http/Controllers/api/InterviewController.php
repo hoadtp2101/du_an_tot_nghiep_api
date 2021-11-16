@@ -21,7 +21,7 @@ class InterviewController extends Controller
     }
 
     public function store(Request $request)
-    {                        echo "dsdsd";die;
+    {                      
         $job = JobRequest::find($request->job_id);
         $candidate_id = explode(',', $request->name_candidate);
         $candidates = [];

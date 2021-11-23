@@ -30,8 +30,13 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if(Auth::user()->status != 1){
+            return response()->json(['error' => 'Account_has_been_disabled'], 400);
         }
 
         return $this->createNewToken($token);

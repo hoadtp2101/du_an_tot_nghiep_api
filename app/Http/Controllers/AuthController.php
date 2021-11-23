@@ -57,18 +57,19 @@ class AuthController extends Controller
         foreach($user->roles as $role){
             $user->roles = $role->id;
         }
-        $u['id'] = $user->id;  
-        $u['name'] = $user->name;  
-        $u['email'] = $user->email;  
-        $u['employee_code'] = $user->employee_code;  
-        $u['password'] = $user->password;  
-        $u['status'] = $user->status;  
-        $u['role'] = $user->roles;  
+
+        $u['id'] = $user->id;
+        $u['name'] = $user->name;
+        $u['email'] = $user->email;
+        $u['employee_code'] = $user->employee_code;
+        $u['password'] = $user->password;
+        $u['status'] = $user->status;
+        $u['role'] = $user->roles;
 
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,            
+            'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => $u,
         ]);
     }
@@ -85,10 +86,10 @@ class AuthController extends Controller
         }
         //Change Password
         $data['password'] = $request->get('new_password');
-        $data['password_changed_at'] = App\Http\Controllers\Carbon::now();
-        $update_status = User::update(Auth::id(), $data);
+        $data['password_changed_at'] = Carbon::now();
+        $update_status = User::where('id', Auth::id())->update($data);
 
-        return $update_status ? $this->getResponse(true, 'SUCCESS_CHANGE_PASSWORD') 
+        return $update_status ? $this->getResponse(true, 'SUCCESS_CHANGE_PASSWORD')
             : $this->getResponse(false, 'FAILED_CHANGE_PASSWORD', 500);
     }
 }

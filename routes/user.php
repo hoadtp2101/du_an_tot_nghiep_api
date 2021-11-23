@@ -11,6 +11,7 @@ Route::middleware(['auth.jwt', 'can:hrManager,App\User'])
             Route::post('regsiter-member', [\App\Http\Controllers\api\UserController::class,'store']);
             Route::delete('destroy/{user}', [\App\Http\Controllers\api\UserController::class,'destroy']);
             Route::post('update-member/{user}', [\App\Http\Controllers\api\UserController::class,'update']);
+            Route::post('disable-member/{user}', [\App\Http\Controllers\api\UserController::class,'disableUser']);
         });
 
     });

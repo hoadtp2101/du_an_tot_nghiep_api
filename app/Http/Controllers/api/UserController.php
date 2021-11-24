@@ -14,20 +14,20 @@ use App\Models\UserRole;
 
 class UserController extends Controller
 {
-    public  function index(){          
+    public  function index(){
         return User::with('roles')->get();
     }
 
-    public function show(User $user){        
+    public function show(User $user){
         return User::with('roles')->where('id', $user->id)->first();
     }
 
-    public function store(UserCreateRequest $request){    
+    public function store(UserCreateRequest $request){
         $password = Hash::make($request->password);
         $user = User::create(array_merge($request->all(), ['password' => $password]));
 
         $user->roles()->attach(!empty($request->roleIds) ? $request->roleIds : []);
-        
+
         return response()->json([
             'status'=> 200,
             'message'=> 'User created successfully',
@@ -36,7 +36,7 @@ class UserController extends Controller
     }
 
     public function update(User $user, Request $request){
-        $user->update($request->all());
+        $user->update($request->except('status'));
         $user->roles()->sync(!empty($request->roleIds) ? $request->roleIds : []);
         return $user;
     }
@@ -45,5 +45,10 @@ class UserController extends Controller
         $user->roles()->detach();
         $user->delete();
         return response()->json('delete_success');
+    }
+
+    public function disableUser(User $user, Request $request){
+        $user->update(['status' => isset($request->status) ? $request->status : 1 ]);
+        return $user;
     }
 }

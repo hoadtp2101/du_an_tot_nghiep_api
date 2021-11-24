@@ -36,6 +36,7 @@ class CandidateController extends Controller
             $path = $request->cv->storeAs('public/cv', $newFileName);           
             $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
         }
+        $model->image = 'no-avatar.png';
         $model->save();
         return $model;
     }
@@ -69,12 +70,6 @@ class CandidateController extends Controller
         Candidate::where('job_id', 'like', $id)->delete();
         $candidate = Candidate::destroy($id);        
         return $candidate;
-    }
-
-    public function export()
-    {
-        $candidate = Candidate::all();
-        return Excel::download(new CandidatesExport($candidate), 'candidates.xlsx');
     }
 
     public function import(Request $request)

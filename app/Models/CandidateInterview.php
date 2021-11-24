@@ -22,5 +22,6 @@ class CandidateInterview extends Model
         "time_onbroad",	
         "reviews",	
         "result",
+        "email",
     ];
 }

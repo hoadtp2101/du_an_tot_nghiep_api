@@ -9,6 +9,6 @@ Route::middleware(['auth.jwt',  'can:hrOrManageHr, App\Models\Candidate'])->grou
     Route::post('/candidate/create', [CandidateController::class, 'create'])->name('candidate.create');
     Route::post('/candidate/edit/{id}', [CandidateController::class, 'edit'])->name('candidate.edit');
     Route::delete('/candidate/delete/{id}', [CandidateController::class, 'remove'])->name('candidate.delete');
-    Route::get('/export', [CandidateController::class, 'export']);
+    
     Route::post('/import', [CandidateController::class, 'import']);
 });

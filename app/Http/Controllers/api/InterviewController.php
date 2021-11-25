@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InterviewFormRequest;
 use App\Mail\sendCandidate;
 use App\Mail\sendMail;
 use App\Models\Candidate;
@@ -20,7 +21,7 @@ class InterviewController extends Controller
         return $interview;
     }
 
-    public function store(Request $request)
+    public function store(InterviewFormRequest $request)
     {                      
         $job = JobRequest::find($request->job_id);
         $candidate_id = explode(',', $request->name_candidate);
@@ -57,7 +58,11 @@ class InterviewController extends Controller
             Mail::to($u->email)->send(new sendMail($senditem, $request->title));
         }
 
-        return $interviews;
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'created successfully',
+            'data'=>$interviews
+        ]);
     }
 
     public function show(Interview $interview)
@@ -65,7 +70,7 @@ class InterviewController extends Controller
         return $interview;
     }
 
-    public function update(Request $request, Interview $interview)
+    public function update(InterviewFormRequest $request, Interview $interview)
     {
         return $interview->update($request->all());
     }

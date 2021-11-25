@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReviewsFormRequest;
 use App\Models\CandidateInterview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class CandidateInterviewController extends Controller
         return response()->json($reviews);
     }
 
-    public function create(Request $request)
+    public function create(ReviewsFormRequest $request)
     {
         $model = new CandidateInterview();
         $model->fill($request->all());
@@ -30,7 +31,7 @@ class CandidateInterviewController extends Controller
         return response()->json($reviews);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(ReviewsFormRequest $request, $id)
     {
         $model = CandidateInterview::find($id);
         $model->fill($request->all());

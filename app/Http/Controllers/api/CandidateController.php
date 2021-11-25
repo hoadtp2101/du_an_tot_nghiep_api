@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Exports\CandidatesExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CandidateFormRequest;
 use App\Models\Candidate;
 use App\Models\CandidateInterview;
 use App\Models\Interview;
@@ -22,7 +23,7 @@ class CandidateController extends Controller
         return response()->json($candidate);
     }
 
-    public function create(Request $request)
+    public function create(CandidateFormRequest $request)
     {        
         $model = new Candidate();
         $model->fill($request->all());
@@ -30,18 +31,23 @@ class CandidateController extends Controller
             $newFileName = uniqid() . '-' . $request->image->getClientOriginalName();
             $path = $request->image->storeAs('public/images/candidate', $newFileName);
             $model->image = $newFileName;
+        } else {
+            $model->image = 'no-avatar.png';
         }
         if ($request->hasFile('cv')) {
             $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
             $path = $request->cv->storeAs('public/cv', $newFileName);           
             $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
-        }
-        $model->image = 'no-avatar.png';
+        }        
         $model->save();
-        return $model;
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'created successfully',
+            'data'=>$model
+        ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(CandidateFormRequest $request, $id)
     {
         $job = JobRequest::all();
         $model = Candidate::find($id);
@@ -112,7 +118,7 @@ class CandidateController extends Controller
             ]);
             $i++;
         }
-        Candidate::insert($arr);
-        return back();
+        $candidate = Candidate::insert($arr);
+        return $candidate;
     }
 }

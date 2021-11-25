@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\JobRequestFormRequest;
 use App\Models\Candidate;
 use App\Models\Interview;
 use App\Models\JobRequest;
@@ -23,13 +24,13 @@ class JobRequestController extends Controller
         return response()->json($job);
     }
 
-    public function create(Request $request)
+    public function create(JobRequestFormRequest $request)
     {
         $data = array_merge($request->all(), ['status' => '0', 'petitioner' => Auth::id()]);
         return JobRequest::create($data);
     }
 
-    public function update(Request $request, JobRequest $jobRequest)
+    public function update(JobRequestFormRequest $request, JobRequest $jobRequest)
     {
         $model = JobRequest::find($jobRequest->id);
         $model->fill($request->except('status'));

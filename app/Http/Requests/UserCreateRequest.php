@@ -30,7 +30,7 @@ class UserCreateRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'employee_code' => 'required|unique:users',
-            'status' => 'number',
+            'status' => 'numeric',
             'roleIds'    => "required|array",
         ];
     }

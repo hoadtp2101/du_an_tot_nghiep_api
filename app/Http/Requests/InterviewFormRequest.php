@@ -42,13 +42,7 @@ class InterviewFormRequest extends FormRequest
             ],            
             'location' => [
                 "required",               
-            ],            
-            'working_time' => [
-                "required",
-            ],          
-            'wage' => [
-                "required", 
-            ],            
+            ],                                
             'receiver' => [
                 "required",                
             ],            

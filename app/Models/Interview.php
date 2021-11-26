@@ -19,6 +19,6 @@ class Interview extends Model
         'title',
         'receiver',
         'name_candidate',
-        'status',
+        'totalReceiver',
     ];
 }

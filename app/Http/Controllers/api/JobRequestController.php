@@ -48,7 +48,7 @@ class JobRequestController extends Controller
 
     public function approve(Request $request, JobRequest $jobRequest)
     {
-        $jobrequest = $jobRequest->update(['status' => $request->status]);
+        $jobrequest = $jobRequest->update(['status' => $request->status, 'reason' => $request->reason]);
         return response()->json('successful_status_change', 200);
     }
 }

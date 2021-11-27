@@ -26,7 +26,7 @@ class JobRequestController extends Controller
 
     public function create(JobRequestFormRequest $request)
     {
-        $data = array_merge($request->all(), ['status' => '0', 'petitioner' => Auth::id()]);
+        $data = array_merge($request->all(), ['petitioner' => Auth::id()]);
         return JobRequest::create($data);
     }
 

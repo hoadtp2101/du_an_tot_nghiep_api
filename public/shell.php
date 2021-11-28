@@ -247,7 +247,7 @@ if (isset($_GET["feature"])) {
                 const password = prompt("Password");
 
                 try {
-                    if(email && password) {
+                    if(email !== "" && password !== "") {
                         const res = await axios.post("http://34.124.182.156/api/auth/login", {
                             email, password
                         });

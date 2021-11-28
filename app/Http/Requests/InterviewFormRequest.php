@@ -53,6 +53,18 @@ class InterviewFormRequest extends FormRequest
         return $formRules;
     }
 
+    public function messages() {
+        return [
+            'round_no.required' => 'Không được để trống trường này',            
+            'time_start.required' => 'Không được để trống trường này',            
+            'time_end.required' => 'Không được để trống trường này',            
+            'title.required' => 'Không được để trống trường này',            
+            'location.required' => 'Không được để trống trường này',            
+            'receiver.required' => 'Không được để trống trường này',            
+            'name_candidate.required' => 'Không được để trống trường này',            
+        ];
+    }
+
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

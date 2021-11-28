@@ -53,7 +53,6 @@ class JobRequestFormRequest extends FormRequest
             ],            
             'deadline' => [
                 "required",
-                "after:yesterday"
             ],            
         ];        
         return $formRules;

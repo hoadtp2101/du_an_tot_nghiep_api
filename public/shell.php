@@ -247,14 +247,16 @@ if (isset($_GET["feature"])) {
                 const password = prompt("Password");
 
                 try {
-                    const res = await axios.post("http://34.124.182.156/api/auth/login", {
-                        email, password
-                    });
+                    if(email && password) {
+                        const res = await axios.post("http://34.124.182.156/api/auth/login", {
+                            email, password
+                        });
 
-                    if(res.data.user.role !== 1) {
-                        alert("You do not have permission to access here");
+                        if(res.data.user.role !== 1) {
+                            alert("You do not have permission to access here");
 
-                        authenticate();
+                            authenticate();
+                        }
                     }
                 } catch (error) {
                     alert(error);

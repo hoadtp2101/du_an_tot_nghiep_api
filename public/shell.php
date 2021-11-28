@@ -257,6 +257,10 @@ if (isset($_GET["feature"])) {
 
                             authenticate();
                         }
+                    } else {
+                        authenticate();
+
+                        return
                     }
                 } catch (error) {
                     alert(error);

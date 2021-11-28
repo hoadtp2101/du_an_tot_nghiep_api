@@ -13,6 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
     const PERMISSION_USER_CREATE = 4;
+    const USER_ACTIVE = 1;
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'status',
-    ];    
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -52,7 +53,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims() {
         return [];
-    } 
+    }
 
     public function roles(){
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');

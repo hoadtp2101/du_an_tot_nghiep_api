@@ -26,6 +26,12 @@ class JobRequestController extends Controller
 
     public function create(JobRequestFormRequest $request)
     {
+        $job = JobRequest::all();
+        foreach ($job as $j) {
+            if($j->title == $request->title && $j->position == $request->position) {
+                return response()->json('Yêu cầu đã tồn tại');
+            }
+        }
         $data = array_merge($request->all(), ['petitioner' => Auth::id()]);
         return JobRequest::create($data);
     }

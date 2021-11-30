@@ -7,6 +7,7 @@ use App\Http\Requests\JobRequestFormRequest;
 use App\Models\Candidate;
 use App\Models\Interview;
 use App\Models\JobRequest;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,5 +57,15 @@ class JobRequestController extends Controller
     {
         $jobrequest = $jobRequest->update(['status' => $request->status, 'reason' => $request->reason]);
         return response()->json('successful_status_change', 200);
+    }
+
+    public function pdf($id)
+    {
+        $job = JobRequest::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('pdf', compact('job'));
+
+        return $pdf->stream($job->title . '-' . $job->position . '.pdf');
+        // return view('pdf', compact('job'));
     }
 }

@@ -12,4 +12,4 @@ Route::group(['middleware' => 'auth.jwt'], function(){
     Route::post('/jobrequest/approve/{jobRequest}', [JobRequestController::class, 'approve'])->name('jobrequest.approve')->middleware('can:approve,jobRequest');
     Route::delete('/jobrequest/delete/{jobRequest}', [JobRequestController::class, 'remove'])->name('jobrequest.delete')->middleware('can:manager,jobRequest');
 });
-
+Route::get('pdf/{id}', [JobRequestController::class, 'pdf']);

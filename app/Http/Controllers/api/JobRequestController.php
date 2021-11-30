@@ -61,11 +61,6 @@ class JobRequestController extends Controller
 
     public function pdf($id)
     {
-        $job = JobRequest::find($id);
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadView('pdf', compact('job'));
-
-        return $pdf->stream($job->title . '-' . $job->position . '.pdf');
-        // return view('pdf', compact('job'));
+      
     }
 }

@@ -59,8 +59,4 @@ class JobRequestController extends Controller
         return response()->json('successful_status_change', 200);
     }
 
-    public function pdf($id)
-    {
-      
-    }
 }

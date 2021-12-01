@@ -59,4 +59,13 @@ class JobRequestController extends Controller
         return response()->json('successful_status_change', 200);
     }
 
+    public function pdf($id)
+    {
+        $job = JobRequest::find($id);
+        $pdf = app('dompdf.wrapper');        
+        $pdf-> setOptions(array('encoding','utf8'));
+        $pdf->setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('job'));
+
+        return $pdf->download($job->title . '-' . $job->position . '.pdf');
+    }
 }

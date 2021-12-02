@@ -75,6 +75,7 @@ class RouteServiceProvider extends ServiceProvider
             base_path('routes/jobrequest.php'),
             base_path('routes/reviews.php'), 
             base_path('routes/user.php'),          
+            base_path('routes/setting.php'),          
         ];
     }
 }

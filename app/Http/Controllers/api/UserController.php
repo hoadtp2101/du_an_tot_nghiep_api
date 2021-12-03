@@ -19,6 +19,10 @@ class UserController extends Controller
     }
 
     public function show(User $user){
+        if($user->status != User::USER_ACTIVE ) {
+            abort(400, 'TÀI KHOẢN ĐÃ BỊ KHÓA');
+        }
+
         return User::with('roles')->where('id', $user->id)->first();
     }
 
@@ -36,7 +40,17 @@ class UserController extends Controller
     }
 
     public function update(User $user, Request $request){
-        $user->update($request->except('status'));
+        if($user->status != User::USER_ACTIVE ) {
+            abort(400, 'TÀI KHOẢN ĐÃ BỊ KHÓA');
+        }
+
+        $data = [
+            'name' => $request->name,
+            'employee_code' => $request->employee_code,
+            'password' => Hash::make($request->password),
+        ];
+
+        $user->update($data);
         $user->roles()->sync(!empty($request->roleIds) ? $request->roleIds : []);
         return $user;
     }

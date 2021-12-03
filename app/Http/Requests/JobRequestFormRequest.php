@@ -53,10 +53,29 @@ class JobRequestFormRequest extends FormRequest
             ],            
             'deadline' => [
                 "required",
-                "after:yesterday"
+            ],            
+            'request' => [
+                "required",
             ],            
         ];        
         return $formRules;
+    }
+
+    public function messages() {
+        return [
+            'title.required' => 'Không được để trống trường này',
+            'description.required' => 'Không được để trống trường này',
+            'position.required' => 'Không được để trống trường này',
+            'amount.required' => 'Không được để trống trường này',
+            'location.required' => 'Không được để trống trường này',
+            'working_time.required' => 'Không được để trống trường này',
+            'wage.required' => 'Không được để trống trường này',
+            'deadline.required' => 'Không được để trống trường này',
+            'title.min' => 'Nhập ít nhất 5 kí tự',
+            'position.min' => 'Nhập ít nhất 5 kí tự',
+            'amount.min' => 'Số lượng không được âm',
+            'position.max' => 'Nhập tối đa 150 kí tự',
+        ];
     }
 
     protected function failedValidation(Validator $validator)

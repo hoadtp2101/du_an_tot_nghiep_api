@@ -7,6 +7,7 @@ use App\Http\Requests\JobRequestFormRequest;
 use App\Models\Candidate;
 use App\Models\Interview;
 use App\Models\JobRequest;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,12 @@ class JobRequestController extends Controller
 
     public function create(JobRequestFormRequest $request)
     {
+        $job = JobRequest::all();
+        foreach ($job as $j) {
+            if($j->title == $request->title && $j->position == $request->position) {
+                return response()->json('Yêu cầu đã tồn tại');
+            }
+        }
         $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL, 'petitioner' => Auth::id()]);
         return JobRequest::create($data);
     }
@@ -59,7 +66,17 @@ class JobRequestController extends Controller
             abort(400, 'job_request_must_exist_status');
         }
 
-        $jobrequest = $jobRequest->update(['status' => $request->status ]);
+        $jobrequest = $jobRequest->update(['status' => $request->status, 'reason' => $request->reason]);
         return response()->json('successful_status_change', 200);
+    }
+
+    public function pdf($id)
+    {
+        $job = JobRequest::find($id);
+        $pdf = app('dompdf.wrapper');        
+        $pdf-> setOptions(array('encoding','utf8'));
+        $pdf->setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('job'));
+
+        return $pdf->download($job->title . '-' . $job->position . '.pdf');
     }
 }

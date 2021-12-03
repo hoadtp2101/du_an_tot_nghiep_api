@@ -118,6 +118,7 @@ class CandidateController extends Controller
             ]);
             $i++;
         }
+        
         $candidate = Candidate::insert($arr);
         return $candidate;
     }

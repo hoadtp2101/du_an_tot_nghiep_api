@@ -25,7 +25,7 @@ class CandidateFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [            
+        $formRules = [            
             'name' => 'required|min:4',            
             'image' => [
                 "mimes:jpg,bmp,png"
@@ -57,7 +57,26 @@ class CandidateFormRequest extends FormRequest
         ];
         if($this->id == null){
             $formRules['cv'][] = "required";
-        }        
+        }   
+        return $formRules;  
+    }
+
+    public function messages() {
+        return [
+            'name.required' => 'Không được để trống trường này',
+            'image.mimes' => 'Ảnh chỉ nhận định dạng jpg/bmp/png',
+            'cv.mimes' => 'Cv chỉ nhận định dạng pdf/doc/docx',
+            'email.required' => 'Không được để trống trường này',
+            'email.email' => 'Không đúng định dạng email',
+            'name.min' => 'Nhập ít nhất 4 kí tự',
+            'phone.required' => 'Không được để trống trường này',
+            'source.required' => 'Không được để trống trường này',
+            'experience.required' => 'Không được để trống trường này',
+            'school.required' => 'Không được để trống trường này',
+            'cv.required' => 'Không được để trống trường này',
+            'status.required' => 'Không được để trống trường này',
+            'experience.min' => 'Không nhập số âm',
+        ];
     }
 
     protected function failedValidation(Validator $validator)

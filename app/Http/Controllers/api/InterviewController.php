@@ -17,7 +17,7 @@ class InterviewController extends Controller
 {
     public function index()
     {
-        $interview = Interview::all();
+        $interview = Interview::with('name_candidate:id,name', 'receiver:id,name')->get();
         return $interview;
     }
 

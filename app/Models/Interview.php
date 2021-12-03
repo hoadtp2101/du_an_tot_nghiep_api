@@ -21,4 +21,12 @@ class Interview extends Model
         'name_candidate',
         'totalReceiver',
     ];
+    
+    public function name_candidate(){
+        return $this->belongsTo(Candidate::class, 'name_candidate', 'id');
+    }
+
+    public function receiver(){
+        return $this->belongsTo(User::class, 'receiver', 'id');
+    }
 }

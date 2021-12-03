@@ -25,6 +25,7 @@ class JobRequest extends Model
         'status',
         'deadline',
         'reason',
+        'request',
     ];
 
     public function petitioner(){

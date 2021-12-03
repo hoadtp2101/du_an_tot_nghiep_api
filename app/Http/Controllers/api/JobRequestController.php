@@ -26,12 +26,19 @@ class JobRequestController extends Controller
 
     public function create(JobRequestFormRequest $request)
     {
-        $data = array_merge($request->all(), ['status' => '0', 'petitioner' => Auth::id()]);
+        $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL, 'petitioner' => Auth::id()]);
         return JobRequest::create($data);
     }
 
     public function update(JobRequestFormRequest $request, JobRequest $jobRequest)
     {
+        // xử lý uodate tại đây
+        if ($jobRequest->status == JobRequest::JOB_STATUS_REFUSE){
+            $data = array_merge($request->all, ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL]);
+            $jobRequest->update($data);
+            return $jobRequest;
+        }
+
         $model = JobRequest::find($jobRequest->id);
         $model->fill($request->except('status'));
         $model->save();
@@ -48,7 +55,11 @@ class JobRequestController extends Controller
 
     public function approve(Request $request, JobRequest $jobRequest)
     {
-        $jobrequest = $jobRequest->update(['status' => $request->status]);
+        if (empty($request->status)){
+            abort(400, 'job_request_must_exist_status');
+        }
+
+        $jobrequest = $jobRequest->update(['status' => $request->status ]);
         return response()->json('successful_status_change', 200);
     }
 }

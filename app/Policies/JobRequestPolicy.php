@@ -29,15 +29,23 @@ class JobRequestPolicy
      * @param  \App\Models\JobRequest  $jobRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function manager(User $user, JobRequest $jobRequest)
+    public function update(User $user, JobRequest $jobRequest)
     {
-        $roles = $user->roles()->pluck('type')->toArray();
-        if(in_array(Role::ROLE_HR_MANAGER, $roles)){
-            return true;
-        } else if (in_array(Role::ROLE_OTHER_MANAGER, $roles) && Auth::id() == $jobRequest->petitioner){
-            return  true;
+        if (in_array($jobRequest->status, [JobRequest::JOB_STATUS_REFUSE, JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL])){
+            $roles = $user->roles()->pluck('type')->toArray();
+            if((in_array(Role::ROLE_OTHER_MANAGER, $roles) || in_array(Role::ROLE_OTHER_MANAGER, $roles)) && $user->id == $jobRequest->petitioner ){
+                return true;
+            } else {
+                return false;
+            }
+
         } else {
-            return false;
+            $roles = $user->roles()->pluck('type')->toArray();
+            if(in_array(Role::ROLE_HR_MANAGER, $roles)){
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }

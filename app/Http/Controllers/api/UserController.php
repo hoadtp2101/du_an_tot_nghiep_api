@@ -51,7 +51,10 @@ class UserController extends Controller
         ];
 
         $user->update($data);
-        $user->roles()->sync(!empty($request->roleIds) ? $request->roleIds : []);
+        if(!empty($request->roleIds)){
+            $user->roles()->sync($request->roleIds);
+        }
+
         return $user;
     }
 

@@ -17,3 +17,4 @@ Route::middleware(['auth.jwt', 'can:hrManager,App\User'])
     });
 
 Route::get('user/list-role',[\App\Http\Controllers\api\UserController::class,'listRoleUserLogin'])->middleware('auth.jwt');
+Route::post('user/update-profile-login',[\App\Http\Controllers\api\UserController::class,'updateProfile'])->middleware('auth.jwt');

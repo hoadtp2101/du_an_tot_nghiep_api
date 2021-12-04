@@ -73,4 +73,11 @@ class UserController extends Controller
     public function  listRoleUserLogin(){
         return Auth::user()->roles()->select('roles.id','roles.name', 'roles.type')->get();
     }
+
+    public function  updateProfile(Request $request){
+        $user = User::find(Auth::id());
+        $user->update(['name' => $request->name]);
+        return  $user;
+
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 // use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserCreateRequest;
@@ -67,5 +68,9 @@ class UserController extends Controller
     public function disableUser(User $user, Request $request){
         $user->update(['status' => isset($request->status) ? $request->status : 1 ]);
         return $user;
+    }
+
+    public function  listRoleUserLogin(){
+        return Auth::user()->roles()->select('roles.id','roles.name', 'roles.type')->get();
     }
 }

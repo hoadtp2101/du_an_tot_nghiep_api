@@ -15,3 +15,5 @@ Route::middleware(['auth.jwt', 'can:hrManager,App\User'])
         });
 
     });
+
+Route::get('user/list-role',[\App\Http\Controllers\api\UserController::class,'listRoleUserLogin'])->middleware('auth.jwt');

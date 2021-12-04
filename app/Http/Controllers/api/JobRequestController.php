@@ -41,7 +41,7 @@ class JobRequestController extends Controller
     {
         // xử lý uodate tại đây
         if ($jobRequest->status == JobRequest::JOB_STATUS_REFUSE){
-            $data = array_merge($request->all, ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL]);
+            $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL]);
             $jobRequest->update($data);
             return $jobRequest;
         }
@@ -73,7 +73,7 @@ class JobRequestController extends Controller
     public function pdf($id)
     {
         $job = JobRequest::find($id);
-        $pdf = app('dompdf.wrapper');        
+        $pdf = app('dompdf.wrapper');
         $pdf-> setOptions(array('encoding','utf8'));
         $pdf->setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('job'));
 

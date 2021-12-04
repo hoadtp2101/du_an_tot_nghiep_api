@@ -48,7 +48,6 @@ class UserController extends Controller
         $data = [
             'name' => $request->name,
             'employee_code' => $request->employee_code,
-            'password' => Hash::make($request->password),
         ];
 
         $user->update($data);

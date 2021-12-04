@@ -47,7 +47,7 @@ class JobRequestController extends Controller
         }
 
         $model = JobRequest::find($jobRequest->id);
-        $model->fill($request->except('status'));
+        $model->fill(array_merge($request->except('status'), ['status' => $jobRequest->status]));
         $model->save();
         return $model;
     }

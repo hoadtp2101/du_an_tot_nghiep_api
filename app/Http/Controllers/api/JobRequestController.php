@@ -62,10 +62,6 @@ class JobRequestController extends Controller
 
     public function approve(Request $request, JobRequest $jobRequest)
     {
-        if (empty($request->status)){
-            abort(400, 'job_request_must_exist_status');
-        }
-
         $jobrequest = $jobRequest->update(['status' => $request->status, 'reason' => $request->reason]);
         return response()->json('successful_status_change', 200);
     }

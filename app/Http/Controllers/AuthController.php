@@ -90,7 +90,7 @@ class AuthController extends Controller
             return $this->getResponse(false, "CURRENT_PASSWORD_AND_NEW_PASSWORD_CAN_NOT_SAME", 422);
         }
         //Change Password
-        $data['password'] = $request->get('new_password');
+        $data['password'] = Hash::make($request->get('new_password'));
         $data['password_changed_at'] = Carbon::now();
         $update_status = User::where('id', Auth::id())->update($data);
 

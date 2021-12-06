@@ -42,10 +42,7 @@ class InterviewFormRequest extends FormRequest
             ],            
             'location' => [
                 "required",               
-            ],                                
-            'receiver' => [
-                "required",                
-            ],            
+            ],         
             'name_candidate' => [
                 "required",                
             ],            
@@ -60,7 +57,6 @@ class InterviewFormRequest extends FormRequest
             'time_end.required' => 'Không được để trống trường này',            
             'title.required' => 'Không được để trống trường này',            
             'location.required' => 'Không được để trống trường này',            
-            'receiver.required' => 'Không được để trống trường này',            
             'name_candidate.required' => 'Không được để trống trường này',            
         ];
     }

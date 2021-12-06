@@ -18,6 +18,12 @@ class InterviewController extends Controller
     public function index()
     {
         $interview = Interview::with('name_candidate:id,name')->get();
+        
+        foreach ($interview as $i) {
+            $receiver = explode(',', $i->receiver);           
+            $i->receiver = $receiver;
+        }
+
         return $interview;
     }
 

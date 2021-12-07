@@ -78,7 +78,8 @@ class InterviewController extends Controller
 
     public function update(InterviewFormRequest $request, Interview $interview)
     {
-        return $interview->update($request->all());
+        $interview->update($request->all());
+        return $interview;
     }
 
     public function destroy(Interview $interview)

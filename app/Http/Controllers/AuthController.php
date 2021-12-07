@@ -36,7 +36,7 @@ class AuthController extends Controller
         }
 
         if(Auth::user()->status != 1){
-            return response()->json(['error' => 'Account_has_been_disabled'], 400);
+            return response()->json(['error' => 'TÀI KHOẢN ĐÃ BỊ KHÓA'], 400);
         }
 
         return $this->createNewToken($token);
@@ -82,19 +82,19 @@ class AuthController extends Controller
     public function changePassword(ChangePasswordRequest $request){
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
             // The passwords matches
-            return $this->getResponse(false, "CURRENT_PASSWORD_NOT_MATCH", 422);
+            return $this->getResponse(false, "MẬT KHẨU HIỆN TẠI KHÔNG PHÙ HỢP", 422);
         }
 
         if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
             //Current password and new password are same
-            return $this->getResponse(false, "CURRENT_PASSWORD_AND_NEW_PASSWORD_CAN_NOT_SAME", 422);
+            return $this->getResponse(false, "MẬT KHẨU HIỆN TẠI VÀ MẬT KHẨU MỚI GIỐNG NHAU", 422);
         }
         //Change Password
         $data['password'] = Hash::make($request->get('new_password'));
         $data['password_changed_at'] = Carbon::now();
         $update_status = User::where('id', Auth::id())->update($data);
 
-        return $update_status ? $this->getResponse(true, 'SUCCESS_CHANGE_PASSWORD')
-            : $this->getResponse(false, 'FAILED_CHANGE_PASSWORD', 500);
+        return $update_status ? $this->getResponse(true, 'THAY ĐỔI MẬT KHẨU THÀNH CÔNG')
+            : $this->getResponse(false, 'THAY ĐỔI MẬT KHẨU THẤT BẠI', 500);
     }
 }

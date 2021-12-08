@@ -24,11 +24,11 @@ class PasswordResetController extends Controller
         // If email does not exist
         if(empty($user)) {
             $status = false;
-            return $this->getResponse($status, 'EMAIL_NOT_FOUND', 404);
+            return $this->getResponse($status, 'KHÔNG TÌM THẤY EMAIL', 404);
         } else {
             $send_status = $this->sendMail($request->email, $request->site_url, $request->original_url, $user);
-            return $send_status ? $this->getResponse($status, 'SUCCESS_SEND_MAIL')
-                : $this->getResponse(false, 'FAILED_SEND_MAIL', 500);
+            return $send_status ? $this->getResponse($status, 'GỬI MAIL THÀNH CÔNG')
+                : $this->getResponse(false, 'GỬI MAIL THẬT BẠI', 500);
         }
     }
 
@@ -83,20 +83,20 @@ class PasswordResetController extends Controller
     public function resetPassword(ResetPasswordRequest $request) {
         $item_match_token = $this->updatePasswordRow($request->token)->get();
         if (count($item_match_token) == 0) {
-            return $this->getResponse(false, 'TOKEN_NOT_FOUND', 422);
+            return $this->getResponse(false, 'KHÔNG TÌM THẤY TOKEN', 422);
         }
 
         $token_expired_at = Carbon::parse($item_match_token[0]->created_at)->addHour();
         if (Carbon::now() > $token_expired_at) {
-            return $this->getResponse(false, 'RESET_PASSWORD_TOKEN_EXPIRED', 401);
+            return $this->getResponse(false, 'RESET_PASSWORD_TOKEN ĐÃ HẾT HẠN', 401);
         }
 
         $email = $item_match_token[0]->email;
 
         $update_status = $this->resetPasswordStatus($email, $request->password);
 
-        return $update_status ? $this->getResponse(true, 'SUCCESS_RESET_PASSWORD')
-            : $this->getResponse(false, 'FAILED_RESET_PASSWORD', 500);
+        return $update_status ? $this->getResponse(true, 'ĐẶT LẠI MẬT KHẨU THÀNH CÔNG')
+            : $this->getResponse(false, 'ĐẶT LẠI MẬT KHẨU THẤT BẠI', 500);
     }
 
     private function updatePasswordRow($token){

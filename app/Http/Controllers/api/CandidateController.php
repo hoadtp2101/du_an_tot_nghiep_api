@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Exports\CandidatesExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CandidateFormRequest;
+use App\Imports\CandidateImport;
 use App\Models\Candidate;
 use App\Models\CandidateInterview;
 use App\Models\Interview;
 use App\Models\JobRequest;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 class CandidateController extends Controller
 {
@@ -24,7 +24,7 @@ class CandidateController extends Controller
     }
 
     public function create(CandidateFormRequest $request)
-    {        
+    {
         $model = new Candidate();
         $model->fill($request->all());
         if ($request->hasFile('image')) {
@@ -36,14 +36,14 @@ class CandidateController extends Controller
         }
         if ($request->hasFile('cv')) {
             $newFileName = uniqid() . '-' . $request->cv->getClientOriginalName();
-            $path = $request->cv->storeAs('public/cv', $newFileName);           
+            $path = $request->cv->storeAs('public/cv', $newFileName);
             $model->cv = "http://127.0.0.1:8000/storage/cv/" . $newFileName;
-        }        
+        }
         $model->save();
         return response()->json([
-            'status'=> 200,
-            'message'=> 'created successfully',
-            'data'=>$model
+            'status' => 200,
+            'message' => 'created successfully',
+            'data' => $model
         ]);
     }
 
@@ -68,58 +68,31 @@ class CandidateController extends Controller
 
     public function remove($id)
     {
-        $interview = Interview::where('name_candidate', 'like', $id)->get();        
-        foreach($interview as $i){            
+        $interview = Interview::where('name_candidate', 'like', $id)->get();
+        foreach ($interview as $i) {
             CandidateInterview::where('interview_id', 'like', $i->id)->delete();
-        }        
-        Interview::where('name_candidate', 'like', $id)->delete();        
+        }
+        Interview::where('name_candidate', 'like', $id)->delete();
         Candidate::where('job_id', 'like', $id)->delete();
-        $candidate = Candidate::destroy($id);        
+        $candidate = Candidate::destroy($id);
         return $candidate;
     }
 
     public function import(Request $request)
-    {
-        $spreadsheet = IOFactory::load($request->file('import'));
-        $sheet = $spreadsheet->setActiveSheetIndex(0);
-        $i = 0;
-        foreach ($sheet->getDrawingCollection() as $drawing) {
-            if ($drawing instanceof MemoryDrawing) {
-                ob_start();
-                call_user_func(
-                    $drawing->getRenderingFunction(),
-                    $drawing->getImageResource()
-                );
-                $imageContents = ob_get_contents();
-                ob_end_clean();
-            } else if ($drawing instanceof WorksheetDrawing) {
-                $zipReader = fopen($drawing->getPath(), 'r');
-                $imageContents = '';
-                while (!feof($zipReader)) {
-                    $imageContents .= fread($zipReader, 1024);
-                }
-                fclose($zipReader);
-                $extension = $drawing->getExtension();
-            }
-            $myFileName = time() . $i . '.' . $extension;
-            file_put_contents('storage/images/candidate/' . $myFileName, $imageContents);   
-            $arr[$i] = ([
-                'name'       => $sheet->getCellByColumnAndRow(1, ($i + 2))->getValue(),
-                'image'      => $myFileName,
-                'email'      => $sheet->getCellByColumnAndRow(3, ($i + 2))->getValue(),
-                'phone'      => $sheet->getCellByColumnAndRow(4, ($i + 2))->getValue(),
-                'source'     => $sheet->getCellByColumnAndRow(5, ($i + 2))->getValue(),
-                'experience' => $sheet->getCellByColumnAndRow(6, ($i + 2))->getValue(),
-                'school'     => $sheet->getCellByColumnAndRow(7, ($i + 2))->getValue(),
-                'cv'         => $sheet->getCellByColumnAndRow(8, ($i + 2))->getValue(),
-                'job_id'     => $sheet->getCellByColumnAndRow(9, ($i + 2))->getValue(),
-                'status'     => $sheet->getCellByColumnAndRow(10, ($i + 2))->getValue(),
-                'created_at'     => date('Y-m-d'),
-            ]);
-            $i++;
+    {                
+        $errors = array();
+        $import = new CandidateImport;
+        $import->import(request()->file('import'));
+        foreach ($import->failures() as $key => $failure) {
+            $errors[$key]['row'] = $failure->row();
+            $errors[$key]['error'] = $failure->errors();
         }
-        
-        $candidate = Candidate::insert($arr);
-        return $candidate;
+        if ($import->failures()->isNotEmpty()) {
+            return $errors;
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'created successfully',
+        ]);
     }
 }

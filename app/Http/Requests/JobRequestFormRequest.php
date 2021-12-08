@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class JobRequestFormRequest extends FormRequest
 {
@@ -28,7 +29,8 @@ class JobRequestFormRequest extends FormRequest
         $formRules = [            
             'title' => [
                 "required",     
-                "min:5",                   
+                "min:5",   
+                Rule::unique('jobrequests', 'title')            
             ],            
             'description' => [
                 "required",
@@ -64,6 +66,7 @@ class JobRequestFormRequest extends FormRequest
     public function messages() {
         return [
             'title.required' => 'Không được để trống trường này',
+            'title.unique' => 'Yêu cầu đã tồn tại',
             'description.required' => 'Không được để trống trường này',
             'position.required' => 'Không được để trống trường này',
             'amount.required' => 'Không được để trống trường này',

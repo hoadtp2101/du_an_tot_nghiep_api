@@ -30,7 +30,7 @@ class JobRequestFormRequest extends FormRequest
             'title' => [
                 "required",     
                 "min:5",   
-                Rule::unique('jobrequests', 'title')            
+                Rule::unique('job_requests', 'title')            
             ],            
             'description' => [
                 "required",

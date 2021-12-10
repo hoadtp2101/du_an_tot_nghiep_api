@@ -23,21 +23,18 @@ class CandidateImport implements ToModel, WithStartRow, WithValidation, SkipsOnF
      */
     public function model(array $row)
     {
-        $job = JobRequest::where('title', $row[7])->get();
-        foreach ($job as $j) {
-            Candidate::create([
-                'name' => $row[0],
-                'image' => "no-avatar.png",
-                'email' => $row[1],
-                'phone' => $row[2],
-                'source' => $row[3],
-                'experience' => $row[4],
-                'school' => $row[5],
-                'cv' => $row[6],
-                'job_id' => $j->id,
-                'status' => $row[8],
-            ]);
-        }
+        Candidate::create([
+            'name' => $row[0],
+            'image' => "no-avatar.png",
+            'email' => $row[1],
+            'phone' => $row[2],
+            'source' => $row[3],
+            'experience' => $row[4],
+            'school' => $row[5],
+            'cv' => $row[6],
+            'job_id' => $row[7],
+            'status' => $row[8],
+        ]);
     }
 
     public function startRow(): int

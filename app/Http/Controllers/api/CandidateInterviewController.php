@@ -18,6 +18,15 @@ class CandidateInterviewController extends Controller
 
     public function create(ReviewsFormRequest $request)
     {
+        $reviews = CandidateInterview::all();
+        foreach ($reviews as $review) {
+            if($review->user_id == Auth::user()->id && $review->candidate_id == $request->candidate_id) {
+                return response()->json([
+                    'status'=> 440,
+                    'message'=> 'Đã đánh giá',
+                ]);
+            }
+        }
         $model = new CandidateInterview();
         $model->fill($request->all());
         $model->user_id = Auth::user()->id;

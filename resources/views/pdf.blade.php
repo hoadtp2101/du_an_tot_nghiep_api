@@ -16,7 +16,7 @@
 
     <div>
         <div class="d-flex">
-            <div><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/logo.png'))) }}" alt=""></div>
+            /* <div><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/logo.png'))) }}" alt=""></div> */
             <div style="margin-left: 180px; font-size: 12px;margin-top:-100px">
                 SSKPI là một trong những công ty công nghệ hàng đầu Châu Á, bao gồm nhiều dịch vụ và mô hình làm việc đa dạng, chuyên nghiệp ở các lĩnh vực công nghệ hybrid, ứng dụng blockchain hay trí tuệ nhân tạo theo quy chuẩn Nhật Bản.
             </div>

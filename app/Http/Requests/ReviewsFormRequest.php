@@ -30,24 +30,24 @@ class ReviewsFormRequest extends FormRequest
                 "required",
                 "numeric",
                 "min:0",
-                "max:10"                     
+                "max:5"                     
             ],            
             'persistent_perseverance' => [
                 "required",
                 "numeric",
                 "min:0",
-                "max:10"
+                "max:5"
             ],            
             'career_goals' => [
                 "required",
                 "numeric",
                 "min:0",
-                "max:10"
+                "max:5"
             ],            
             'specialize_skill' => [
                 "numeric",
                 "min:0",
-                "max:10" 
+                "max:5" 
             ],            
             'english' => [
                 "required",    
@@ -59,7 +59,7 @@ class ReviewsFormRequest extends FormRequest
                 "required",
                 "numeric",
                 "min:0",
-                "max:10"
+                "max:5"
             ],          
             'time_onbroad' => [
                 "required", 

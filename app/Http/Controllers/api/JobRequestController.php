@@ -29,7 +29,7 @@ class JobRequestController extends Controller
     {
         $job = JobRequest::all();
         foreach ($job as $j) {
-            if($j->title == $request->title && $j->position == $request->position) {
+            if($j->title == $request->title) {
                 return response()->json('Yêu cầu đã tồn tại');
             }
         }
@@ -62,10 +62,6 @@ class JobRequestController extends Controller
 
     public function approve(Request $request, JobRequest $jobRequest)
     {
-        if (empty($request->status)){
-            abort(400, 'job_request_must_exist_status');
-        }
-
         $jobrequest = $jobRequest->update(['status' => $request->status, 'reason' => $request->reason]);
         return response()->json('successful_status_change', 200);
     }

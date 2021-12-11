@@ -17,12 +17,18 @@ class InterviewController extends Controller
 {
     public function index()
     {
-        $interview = Interview::with('name_candidate:id,name', 'receiver:id,name')->get();
+        $interview = Interview::with('name_candidate:id,name')->get();
+        
+        foreach ($interview as $i) {
+            $receiver = explode(',', $i->receiver);           
+            $i->receiver = $receiver;
+        }
+
         return $interview;
     }
 
     public function store(InterviewFormRequest $request)
-    {                      
+    {
         $job = JobRequest::find($request->job_id);
         $candidate_id = explode(',', $request->name_candidate);
         $candidates = [];
@@ -59,9 +65,9 @@ class InterviewController extends Controller
         }
 
         return response()->json([
-            'status'=> 200,
-            'message'=> 'created successfully',
-            'data'=>$interviews
+            'status' => 200,
+            'message' => 'created successfully',
+            'data' => $interviews
         ]);
     }
 
@@ -72,7 +78,8 @@ class InterviewController extends Controller
 
     public function update(InterviewFormRequest $request, Interview $interview)
     {
-        return $interview->update($request->all());
+        $interview->update($request->all());
+        return $interview;
     }
 
     public function destroy(Interview $interview)

@@ -13,7 +13,7 @@ Route::middleware(['auth.jwt', 'can:hrManager,App\User'])
         });
 
     });
-Route::get('user/user-detail/{user}', [\App\Http\Controllers\api\UserController::class,'show'])->middleware('auth.jwt');
 Route::get('user/list-role',[\App\Http\Controllers\api\UserController::class,'listRoleUserLogin'])->middleware('auth.jwt');
 Route::post('user/update-profile-login',[\App\Http\Controllers\api\UserController::class,'updateProfile'])->middleware('auth.jwt');
-Route::get('list-user', [\App\Http\Controllers\api\UserController::class,'index'])->middleware('auth.jwt');
+Route::get('user/list-user', [\App\Http\Controllers\api\UserController::class,'index'])->middleware('auth.jwt');
+Route::get('user/user-detail/{user}', [\App\Http\Controllers\api\UserController::class,'show'])->middleware('auth.jwt');

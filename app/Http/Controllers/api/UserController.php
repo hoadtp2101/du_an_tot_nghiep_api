@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 // use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(User $user, Request $request){
+    public function update(User $user, UpdateUserRequest $request){
         if($user->status != User::USER_ACTIVE ) {
             abort(400, 'TÀI KHOẢN ĐÃ BỊ KHÓA');
         }
@@ -59,6 +60,10 @@ class UserController extends Controller
     }
 
     public function destroy(User $user){
+        if($user->id == Auth::id()){
+            abort(400, "KHÔNG THỂ XÓA TÀI KHOẢN");
+        }
+
         $user->roles()->detach();
         $user->delete();
         return response()->json('delete_success');

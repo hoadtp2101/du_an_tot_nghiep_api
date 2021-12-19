@@ -29,7 +29,7 @@ class JobRequestController extends Controller
     {
         $job = JobRequest::all();
         foreach ($job as $j) {
-            if($j->title == $request->title) {
+            if($j->title == $request->title && $j->position == $request->position) {
                 return response()->json('Yêu cầu đã tồn tại');
             }
         }
@@ -69,6 +69,9 @@ class JobRequestController extends Controller
     public function pdf($id)
     {
         $job = JobRequest::find($id);
+        if (!$job) {
+            return response()->json('Không tồn tại yêu cầu', 440);
+        }
         $pdf = app('dompdf.wrapper');
         $pdf-> setOptions(array('encoding','utf8'));
         $pdf->setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('job'));

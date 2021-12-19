@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CandidateFormRequest extends FormRequest
 {
@@ -32,7 +33,8 @@ class CandidateFormRequest extends FormRequest
             ],            
             'email' => [
                 "required",
-                "email"
+                "email",
+                Rule::unique('candidates', 'email') 
             ],            
             'phone' => [
                 "required",                 
@@ -68,6 +70,7 @@ class CandidateFormRequest extends FormRequest
             'cv.mimes' => 'Cv chỉ nhận định dạng pdf/doc/docx',
             'email.required' => 'Không được để trống trường này',
             'email.email' => 'Không đúng định dạng email',
+            'email.unique' => 'Ứng viên đã tồn tại',
             'name.min' => 'Nhập ít nhất 4 kí tự',
             'phone.required' => 'Không được để trống trường này',
             'source.required' => 'Không được để trống trường này',

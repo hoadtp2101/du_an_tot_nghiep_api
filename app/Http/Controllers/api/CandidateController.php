@@ -26,7 +26,7 @@ class CandidateController extends Controller
     public function create(CandidateFormRequest $request)
     {
         $model = new Candidate();
-        $model->fill($request->all());
+        $model->fill($request->all());        
         if ($request->hasFile('image')) {
             $newFileName = uniqid() . '-' . $request->image->getClientOriginalName();
             $path = $request->image->storeAs('public/images/candidate', $newFileName);
@@ -47,7 +47,7 @@ class CandidateController extends Controller
         ]);
     }
 
-    public function edit(CandidateFormRequest $request, $id)
+    public function edit(Request $request, $id)
     {
         $job = JobRequest::all();
         $model = Candidate::find($id);

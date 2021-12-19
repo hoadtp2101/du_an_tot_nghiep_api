@@ -29,7 +29,7 @@ class JobRequestController extends Controller
     {
         $job = JobRequest::all();
         foreach ($job as $j) {
-            if($j->title == $request->title) {
+            if($j->title == $request->title && $j->position == $request->position) {
                 return response()->json('Yêu cầu đã tồn tại');
             }
         }

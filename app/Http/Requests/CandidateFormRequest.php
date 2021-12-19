@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CandidateFormRequest extends FormRequest
 {
@@ -32,7 +33,8 @@ class CandidateFormRequest extends FormRequest
             ],            
             'email' => [
                 "required",
-                "email"
+                "email",
+                Rule::unique('candidates', 'email') 
             ],            
             'phone' => [
                 "required",                 

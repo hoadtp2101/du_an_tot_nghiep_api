@@ -70,6 +70,7 @@ class CandidateFormRequest extends FormRequest
             'cv.mimes' => 'Cv chỉ nhận định dạng pdf/doc/docx',
             'email.required' => 'Không được để trống trường này',
             'email.email' => 'Không đúng định dạng email',
+            'email.unique' => 'Ứng viên đã tồn tại',
             'name.min' => 'Nhập ít nhất 4 kí tự',
             'phone.required' => 'Không được để trống trường này',
             'source.required' => 'Không được để trống trường này',

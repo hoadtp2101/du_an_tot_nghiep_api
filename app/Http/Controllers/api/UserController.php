@@ -46,12 +46,8 @@ class UserController extends Controller
             abort(400, 'TÀI KHOẢN ĐÃ BỊ KHÓA');
         }
 
-        $data = [
-            'name' => $request->name,
-            'employee_code' => $request->employee_code,
-        ];
 
-        $user->update($data);
+        $user->update($request->all());
         if(!empty($request->roleIds)){
             $user->roles()->sync($request->roleIds);
         }
@@ -71,7 +67,7 @@ class UserController extends Controller
 
     public function disableUser(User $user, Request $request){
         $user->update(['status' => isset($request->status) ? $request->status : 1 ]);
-        return $user;
+        return response()->json('CẬP NHẬT TRẠNG THÁI NGƯỜI DÙNG THÀNH CÔNG',200);
     }
 
     public function  listRoleUserLogin(){

@@ -19,14 +19,14 @@ class CandidateController extends Controller
 {
     public function list()
     {
-        $candidate = Candidate::all();
+        $candidate = Candidate::orderBy('updated_at', 'desc')->all();
         return response()->json($candidate);
     }
 
     public function create(CandidateFormRequest $request)
     {
         $model = new Candidate();
-        $model->fill($request->all());        
+        $model->fill($request->all());
         if ($request->hasFile('image')) {
             $newFileName = uniqid() . '-' . $request->image->getClientOriginalName();
             $path = $request->image->storeAs('public/images/candidate', $newFileName);
@@ -79,7 +79,7 @@ class CandidateController extends Controller
     }
 
     public function import(Request $request)
-    {                
+    {
         $errors = array();
         $import = new CandidateImport;
         $import->import(request()->file('import'));

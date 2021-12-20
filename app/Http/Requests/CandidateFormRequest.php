@@ -29,7 +29,7 @@ class CandidateFormRequest extends FormRequest
         $formRules = [            
             'name' => 'required|min:4',            
             'image' => [
-                "mimes:jpg,bmp,png"
+                "mimes:jpg,png"
             ],            
             'email' => [
                 "required",

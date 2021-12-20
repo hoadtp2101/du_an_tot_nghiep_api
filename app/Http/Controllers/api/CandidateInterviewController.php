@@ -12,7 +12,7 @@ class CandidateInterviewController extends Controller
 {
     public function list()
     {
-        $reviews = CandidateInterview::orderBy('updated_at', 'desc')->all();
+        $reviews = CandidateInterview::orderBy('updated_at', 'desc')->get();
         return response()->json($reviews);
     }
 

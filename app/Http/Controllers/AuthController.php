@@ -32,7 +32,7 @@ class AuthController extends Controller
 
 
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'SAI TÀI KHOẢN HOẶC MẬT KHẨU!'], 401);
         }
 
         if(Auth::user()->status != 1){

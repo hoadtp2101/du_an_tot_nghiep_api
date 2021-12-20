@@ -19,7 +19,7 @@ class CandidateController extends Controller
 {
     public function list()
     {
-        $candidate = Candidate::orderBy('updated_at', 'desc')->all();
+        $candidate = Candidate::orderBy('updated_at', 'desc')->get();
         return response()->json($candidate);
     }
 

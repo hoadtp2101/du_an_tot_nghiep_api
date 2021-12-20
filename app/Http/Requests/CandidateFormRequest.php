@@ -66,7 +66,7 @@ class CandidateFormRequest extends FormRequest
     public function messages() {
         return [
             'name.required' => 'Không được để trống trường này',
-            'image.mimes' => 'Ảnh chỉ nhận định dạng jpg/bmp/png',
+            'image.mimes' => 'Ảnh chỉ nhận định dạng jpg/png',
             'cv.mimes' => 'Cv chỉ nhận định dạng pdf/doc/docx',
             'email.required' => 'Không được để trống trường này',
             'email.email' => 'Không đúng định dạng email',

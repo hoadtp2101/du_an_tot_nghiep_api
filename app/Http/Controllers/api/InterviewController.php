@@ -17,10 +17,10 @@ class InterviewController extends Controller
 {
     public function index()
     {
-        $interview = Interview::with('name_candidate:id,name')->get();
-        
+        $interview = Interview::with('name_candidate:id,name')->orderBy('updated_at', 'desc')->get();
+
         foreach ($interview as $i) {
-            $receiver = explode(',', $i->receiver);           
+            $receiver = explode(',', $i->receiver);
             $i->receiver = $receiver;
         }
 

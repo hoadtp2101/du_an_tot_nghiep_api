@@ -67,7 +67,7 @@ class UserController extends Controller
 
     public function disableUser(User $user, Request $request){
         $user->update(['status' => isset($request->status) ? $request->status : 1 ]);
-        return response()->json('CẬP NHẬT TRẠNG THÁI NGƯỜI DÙNG THÀNH CÔNG',200);
+        return $user;
     }
 
     public function  listRoleUserLogin(){

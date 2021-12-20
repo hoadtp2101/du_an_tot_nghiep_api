@@ -15,7 +15,7 @@ class JobRequestController extends Controller
 {
     public function list()
     {
-        $job = JobRequest::with('petitioner:id,name')->get();
+        $job = JobRequest::with('petitioner:id,name')->orderBy('updated_at', 'desc')->get();
         return response()->json($job);
     }
 

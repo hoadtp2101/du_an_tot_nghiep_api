@@ -17,7 +17,7 @@ use App\Models\UserRole;
 class UserController extends Controller
 {
     public  function index(){
-        return User::with('roles')->get();
+        return User::with('roles')->orderBy('updated_at', 'desc')->get();
     }
 
     public function show(User $user){

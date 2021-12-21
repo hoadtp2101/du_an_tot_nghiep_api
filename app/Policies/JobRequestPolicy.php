@@ -33,7 +33,7 @@ class JobRequestPolicy
     {
         if (in_array($jobRequest->status, [JobRequest::JOB_STATUS_REFUSE, JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL])){
             $roles = $user->roles()->pluck('type')->toArray();
-            if((in_array(Role::ROLE_OTHER_MANAGER, $roles) || in_array(Role::ROLE_OTHER_MANAGER, $roles)) && $user->id == $jobRequest->petitioner ){
+            if((in_array(Role::ROLE_HR_MANAGER, $roles) || in_array(Role::ROLE_OTHER_MANAGER, $roles)) && $user->id == $jobRequest->petitioner ){
                 return true;
             } else {
                 return false;
@@ -48,6 +48,19 @@ class JobRequestPolicy
             }
         }
 
+    }
+
+    public function delete(User $user, JobRequest $jobRequest)
+    {
+        if (in_array($jobRequest->status, [JobRequest::JOB_STATUS_REFUSE, JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL])){
+            $roles = $user->roles()->pluck('type')->toArray();
+            if((in_array(Role::ROLE_HR_MANAGER, $roles) || in_array(Role::ROLE_OTHER_MANAGER, $roles)) && $user->id == $jobRequest->petitioner ){
+                return true;
+            } else {
+                return false;
+            }
+
+        }
     }
 
     public function restore(User $user, JobRequest $jobRequest)

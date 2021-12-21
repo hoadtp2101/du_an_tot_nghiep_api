@@ -28,9 +28,7 @@ class CandidateController extends Controller
         $model = new Candidate();
         $model->fill($request->all());
         if ($request->hasFile('image')) {
-            var_dump($request->file('image'));
             $newFileName = uniqid() . '-' .$request->file('image')->getClientOriginalName();
-            var_dump($newFileName);
             $path = $request->file('image')->storeAs('public/images/candidate', $newFileName);
             $model->image = $newFileName;
         } else {

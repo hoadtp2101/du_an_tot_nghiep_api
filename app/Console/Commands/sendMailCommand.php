@@ -47,7 +47,7 @@ class sendMailCommand extends Command
     {
         $interviews = Interview::where("time_start",'>=', "'". Carbon::now('Asia/Ho_Chi_Minh') . "'")->get();
         foreach ($interviews as $interview) {
-            if (Carbon::now('Asia/Ho_Chi_Minh') == $interview->time_end) {
+            if (strtotime(Carbon::now('Asia/Ho_Chi_Minh')) == strtotime($interview->time_end)) {
                 $job = JobRequest::find($interview->job_id);
                 $candidate = Candidate::find($interview->name_candidate);
                 $toUser = explode(',', $interview->receiver);

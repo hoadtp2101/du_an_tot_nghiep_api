@@ -41,7 +41,14 @@ class CandidateInterviewController extends Controller
                 }
             } else {
                 if($candidate){
-                    $status = $candidate->status == Candidate::STATUS_ROUND_PASS ? Candidate::STATUS_ROUND_PASS : $candidate->status++;
+                    if($candidate->status < Candidate::STATUS_ROUND_PASS){
+                        $status = $candidate->status + 1;
+                    } else if($candidate->status == Candidate::STATUS_ROUND_PASS){
+                        $status = $candidate->status;
+                    } else {
+                        $status = Candidate::STATUS_CV;
+                    }
+
                     $candidate->update(['status' => $status]);
                 }
             }
@@ -65,7 +72,7 @@ class CandidateInterviewController extends Controller
     {
         try {
             DB::beginTransaction();
-            $candidate = Candidate::where('id', $request->candidate_id)->fisrt();
+            $candidate = Candidate::where('id', $request->candidate_id)->first();
             if($request->result == 'Fail'){
                 if($candidate){
                     $candidate->update(['status' => Candidate::STATUS_FAIL]);
@@ -76,7 +83,14 @@ class CandidateInterviewController extends Controller
                 }
             } else {
                 if($candidate){
-                    $status = $candidate->status == Candidate::STATUS_ROUND_PASS ? Candidate::STATUS_ROUND_PASS : $candidate->status++;
+                    if($candidate->status < Candidate::STATUS_ROUND_PASS){
+                        $status = $candidate->status + 1;
+                    } else if($candidate->status == Candidate::STATUS_ROUND_PASS){
+                        $status = $candidate->status;
+                    } else {
+                        $status = Candidate::STATUS_CV;
+                    }
+
                     $candidate->update(['status' => $status]);
                 }
             }

@@ -52,7 +52,6 @@ class CandidateInterviewController extends Controller
                     $candidate->update(['status' => $status]);
                 }
             }
-
             $model = new CandidateInterview();
             $model->fill($request->all());
             $model->user_id = Auth::user()->id;
@@ -99,8 +98,6 @@ class CandidateInterviewController extends Controller
             $model->fill($request->all());
             $model->user_id = Auth::user()->id;
             $model->save();
-            return $model;
-
             DB::commit();
             return $model;
         } catch (\Exception $exception) {

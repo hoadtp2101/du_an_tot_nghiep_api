@@ -45,21 +45,19 @@ class sendMailCommand extends Command
      */
     public function handle()
     {
-        $interviews = Interview::where("time_start",'>=', "'". Carbon::now('Asia/Ho_Chi_Minh') . "'")->get();
+        $interviews = Interview::where("time_end", '=', "'" . Carbon::now('Asia/Ho_Chi_Minh') . "'")->get();
         foreach ($interviews as $interview) {
-            if (strtotime(Carbon::now('Asia/Ho_Chi_Minh')) == strtotime($interview->time_end)) {
-                $job = JobRequest::find($interview->job_id);
-                $candidate = Candidate::find($interview->name_candidate);
-                $toUser = explode(',', $interview->receiver);
-                foreach ($toUser as $key => $value) {
-                    $u = User::find($value);
-                    $senditem = new \stdClass();
-                    $senditem->receiver = $u->name;
-                    $senditem->name = $candidate->name;
-                    $senditem->position = $job->position;
-                    $senditem->job = $job->title;
-                    Mail::to($u->email)->send(new sendMailReview($senditem, '[SSKPI] Thư mời đánh giá'));
-                }
+            $job = JobRequest::find($interview->job_id);
+            $candidate = Candidate::find($interview->name_candidate);
+            $toUser = explode(',', $interview->receiver);
+            foreach ($toUser as $key => $value) {
+                $u = User::find($value);
+                $senditem = new \stdClass();
+                $senditem->receiver = $u->name;
+                $senditem->name = $candidate->name;
+                $senditem->position = $job->position;
+                $senditem->job = $job->title;
+                Mail::to($u->email)->send(new sendMailReview($senditem, '[SSKPI] Thư mời đánh giá'));
             }
         }
     }

@@ -30,16 +30,7 @@ class CandidateInterviewController extends Controller
     {
         try {
             DB::beginTransaction();
-            $reviews = CandidateInterview::all();
-            foreach ($reviews as $review) {
-                if($review->user_id == Auth::user()->id && $review->candidate_id == $request->candidate_id) {
-                    return response()->json([
-                        'status'=> 440,
-                        'message'=> 'Đã đánh giá',
-                    ]);
-                }
-            }
-            $candidate = Candidate::where('id', $request->candidate_id)->fisrt();
+            $candidate = Candidate::where('id', $request->candidate_id)->first();
             if($request->result == 'Fail'){
                 if($candidate){
                     $candidate->update(['status' => Candidate::STATUS_FAIL]);
@@ -103,7 +94,7 @@ class CandidateInterviewController extends Controller
             Log::error($exception->getMessage());
             abort(400, $exception->getMessage());
         }
-        
+
     }
 
     public function remove($id)

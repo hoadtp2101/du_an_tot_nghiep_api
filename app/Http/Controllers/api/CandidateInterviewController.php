@@ -19,6 +19,13 @@ class CandidateInterviewController extends Controller
         return response()->json($reviews);
     }
 
+
+    public function show($id)
+    {
+        $reviews = CandidateInterview::find($id);
+        return response()->json($reviews);
+    }
+
     public function create(ReviewsFormRequest $request)
     {
         try {
@@ -61,12 +68,6 @@ class CandidateInterviewController extends Controller
             abort(400, $exception->getMessage());
         }
 
-    }
-
-    public function show($id)
-    {
-        $reviews = CandidateInterview::find($id);
-        return response()->json($reviews);
     }
 
     public function edit(ReviewsFormRequest $request, $id)

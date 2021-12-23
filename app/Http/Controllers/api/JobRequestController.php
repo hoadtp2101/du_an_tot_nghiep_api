@@ -33,7 +33,7 @@ class JobRequestController extends Controller
                 return response()->json([
                     'status' => 440,
                     'message' => 'Yêu cầu đã tồn tại',
-                ]);
+                ], 440);
             }
         }
         $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL, 'petitioner' => Auth::id()]);

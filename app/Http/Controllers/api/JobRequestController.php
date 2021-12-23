@@ -29,8 +29,11 @@ class JobRequestController extends Controller
     {
         $job = JobRequest::all();
         foreach ($job as $j) {
-            if($j->title == $request->title && $j->position == $request->position) {
-                return response()->json('Yêu cầu đã tồn tại');
+            if ($j->title == $request->title && $j->position == $request->position) {
+                return response()->json([
+                    'status' => 440,
+                    'message' => 'Yêu cầu đã tồn tại',
+                ]);
             }
         }
         $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL, 'petitioner' => Auth::id()]);
@@ -40,7 +43,7 @@ class JobRequestController extends Controller
     public function update(JobRequestFormRequest $request, JobRequest $jobRequest)
     {
         // xử lý uodate tại đây
-        if ($jobRequest->status == JobRequest::JOB_STATUS_REFUSE){
+        if ($jobRequest->status == JobRequest::JOB_STATUS_REFUSE) {
             $data = array_merge($request->all(), ['status' => JobRequest::JOB_STATUS_WAITING_FOR_APPROVAL]);
             $jobRequest->update($data);
             return $jobRequest;
@@ -73,7 +76,7 @@ class JobRequestController extends Controller
             return response()->json('Không tồn tại yêu cầu', 440);
         }
         $pdf = app('dompdf.wrapper');
-        $pdf-> setOptions(array('encoding','utf8'));
+        $pdf->setOptions(array('encoding', 'utf8'));
         $pdf->setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('job'));
 
         return $pdf->download($job->title . '-' . $job->position . '.pdf');
